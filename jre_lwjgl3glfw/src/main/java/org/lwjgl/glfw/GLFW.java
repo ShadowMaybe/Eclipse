@@ -832,6 +832,19 @@ public class GLFW
         return GLFW_PLATFORM_X11;
     }
 
+    /**
+     * Reports whether a window platform can be used.
+     *
+     * Only one platform is ever in play here - see {@link #glfwGetPlatform()}, which always answers X11 - so X11 is the
+     * single platform that can be reported as available. Anything else would have a caller build its input handling and
+     * surface negotiation around a windowing system the launcher does not emulate, with no fallback for it.
+     *
+     * @param platform a {@code GLFW_PLATFORM_*} constant
+     */
+    public static boolean glfwPlatformSupported(int platform) {
+        return platform == GLFW_PLATFORM_X11 || platform == GLFW_ANY_PLATFORM;
+    }
+
     @NativeType("GLFWwindow *")
     public static long glfwGetCurrentContext() {
         long __functionAddress = Functions.GetCurrentContext;
@@ -883,6 +896,22 @@ public class GLFW
         width.put(mGLFWWindowWidth);
         height.put(mGLFWWindowHeight);
     }
+
+    // There is a single virtual display behind the launcher's surface, and nothing queries its name or gamma ramp for us.
+
+    @NativeType("char const *")
+    public static String glfwGetMonitorName(@NativeType("GLFWmonitor *") long monitor) {
+        return "Eclipse Display";
+    }
+
+    @NativeType("void *")
+    public static long glfwGetMonitorUserPointer(@NativeType("GLFWmonitor *") long monitor) {
+        return 0L;
+    }
+
+    public static void glfwSetMonitorUserPointer(@NativeType("GLFWmonitor *") long monitor, @NativeType("void *") long pointer) {}
+
+    public static void glfwSetGamma(@NativeType("GLFWmonitor *") long monitor, float gamma) {}
 
     @NativeType("GLFWmonitor *")
     public static long glfwGetWindowMonitor(@NativeType("GLFWwindow *") long window) {
@@ -1089,6 +1118,33 @@ public class GLFW
     }
 
     public static void glfwSetWindowIcon(@NativeType("GLFWwindow *") long window, @Nullable @NativeType("GLFWimage const *") GLFWImage.Buffer images) {}
+
+    // The game is drawn into a surface the launcher owns, so there is no window manager to ask about any of this. These
+    // are the changes a desktop caller makes on focus loss or while toggling fullscreen; they have nothing to act on,
+    // and the launcher applies the equivalent change itself when it resizes or re-creates the surface.
+
+    public static void glfwFocusWindow(@NativeType("GLFWwindow *") long window) {}
+
+    public static void glfwIconifyWindow(@NativeType("GLFWwindow *") long window) {}
+
+    public static void glfwMaximizeWindow(@NativeType("GLFWwindow *") long window) {}
+
+    public static void glfwRestoreWindow(@NativeType("GLFWwindow *") long window) {}
+
+    public static void glfwSetWindowAspectRatio(@NativeType("GLFWwindow *") long window, int numer, int denom) {}
+
+    public static float glfwGetWindowOpacity(@NativeType("GLFWwindow *") long window) {
+        return 1.0f;
+    }
+
+    public static void glfwSetWindowOpacity(@NativeType("GLFWwindow *") long window, float opacity) {}
+
+    @NativeType("void *")
+    public static long glfwGetWindowUserPointer(@NativeType("GLFWwindow *") long window) {
+        return 0L;
+    }
+
+    public static void glfwSetWindowUserPointer(@NativeType("GLFWwindow *") long window, @NativeType("void *") long pointer) {}
 
     public static void glfwPollEvents() {
         if (!mGLFWIsInputReady) {
