@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -12,7 +12,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Wahlweise einen Mod-Installer</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher ist unerwartet abgestürzt</string>
+    <string name="error_fatal">Eclipse Launcher ist unerwartet abgestürzt</string>
     <string name="error_no_version">Keine Version!</string>
     <string name="error_show_more">Mehr anzeigen</string>
     <string name="error_show_less">Weniger anzeigen</string>
@@ -47,7 +47,7 @@
     <string name="mcl_setting_title_javaargs">JVM-Startargumente</string>
     <string name="mcl_setting_subtitle_javaargs">Achtung! Das Verändern dieser Argumente ohne Fachwissen kann zu Abstürzen führen.</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (alle Versionen, schnell)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (alle Versionen, schnell)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle Versionen, mittel)</string>
     <string name="mcl_setting_veroption_release">Vollversionen</string>
     <string name="mcl_setting_veroption_snapshot">Entwicklungsversionen</string>

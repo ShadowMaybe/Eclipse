@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Android өсөн Minecraft: Java Edition)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Android өсөн Minecraft: Java Edition)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Мода ҡуйыусыһын һайлағыҙ</string>
     <!-- Error messages -->
-    <string name="error_fatal">Көтмәгәндә EclipseLauncher программаһының эше боҙолоп китә</string>
+    <string name="error_fatal">Көтмәгәндә Eclipse Launcher программаһының эше боҙолоп китә</string>
     <string name="error_no_version">Версиялар юҡ!</string>
     <string name="error_show_more">Күберәк</string>
     <string name="error_show_less">Әҙерәк</string>
@@ -48,7 +48,7 @@
     <string name="mcl_setting_title_javaargs">JVM-ды эшләтеп ебәреү аргументтары</string>
     <string name="mcl_setting_subtitle_javaargs">Һаҡ булығыҙ, әгәр ҡулланыусы белмәһә, үҙгәрештәр индерһәгеҙ, уйындың боҙолоуына килтереүе ихтимал.</string>
     <string name="mcl_setting_category_renderer">Рендерер</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES (бөтә версиялар, тиҙ)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES (бөтә версиялар, тиҙ)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) (бөтә версиялар, уртаса)</string>
     <string name="mcl_setting_veroption_release">Релиздар</string>
     <string name="mcl_setting_veroption_snapshot">Снапшотттар</string>

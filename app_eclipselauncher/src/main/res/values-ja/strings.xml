@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition for Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition for Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Mod インストーラーを選択</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher が異常終了しました</string>
+    <string name="error_fatal">Eclipse Launcher が異常終了しました</string>
     <string name="error_no_version">バージョンがありません</string>
     <string name="error_show_more">詳細を表示</string>
     <string name="error_show_less">詳細を閉じる</string>
@@ -42,7 +42,7 @@
     <string name="mcl_setting_title_javaargs">JVM 起動引数</string>
     <string name="mcl_setting_subtitle_javaargs">注意してください, 知識がない場合、ゲームがクラッシュすることがあります。</string>
     <string name="mcl_setting_category_renderer">レンダラー</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (全バージョン対応、動作が軽い)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (全バージョン対応、動作が軽い)</string>
     <string name="mcl_setting_veroption_release">正式</string>
     <string name="mcl_setting_veroption_snapshot">スナップショット</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha 版</string>

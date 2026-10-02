@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition dla Androida)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition dla Androida)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Wybierz instalator modyfikacji</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher uległ nieoczekiwanej awarii</string>
+    <string name="error_fatal">Eclipse Launcher uległ nieoczekiwanej awarii</string>
     <string name="error_no_version">Brak wersji!</string>
     <string name="error_show_more">Pokaż więcej</string>
     <string name="error_show_less">Pokaż mniej</string>
@@ -50,7 +50,7 @@
     <string name="mcl_setting_title_javaargs">Argumenty uruchomienia JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Zachowaj ostrożność, ponieważ wprowadzenie zmian bez odpowiedniej wiedzy może doprowadzić do awarii.</string>
     <string name="mcl_setting_category_renderer">Silnik renderujący</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (wszystkie wersje, szybki)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (wszystkie wersje, szybki)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (wszystkie wersje, średni)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - tylko 1.17+</string>
     <string name="mcl_setting_veroption_release">Oficjalne wydanie</string>
@@ -234,7 +234,7 @@
     <string name="preference_gyro_sample_rate_title">Częstotliwość próbkowania żyroskopu</string>
     <string name="preference_gyro_sample_rate_description">Jeśli masz problemy z wydajnością sterowania żyroskopowego, zwiększ tę wartość.</string>
     <string name="microsoft_login_retry_later">Zbyt wiele zapytań. Spróbuj ponownie później.</string>
-    <string name="storage_required">EclipseLauncher wymaga podłączonej pamięci zewnętrznej. Podłącz ją ponownie i zrestartuj aplikację.</string>
+    <string name="storage_required">Eclipse Launcher wymaga podłączonej pamięci zewnętrznej. Podłącz ją ponownie i zrestartuj aplikację.</string>
     <string name="mcl_setting_title_buttonallcaps">Używaj tylko dużych liter w etykietach przycisków</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Wyłącz tę opcję, jeśli chcesz używać małych liter w sterowaniu dotykowym.</string>
     <string name="create_profile">Utwórz nowy profil</string>
@@ -319,7 +319,7 @@
     <string name="preference_category_miscellaneous">Pozostałe ustawienia</string>
     <string name="preference_category_video">Ustawienia wideo</string>
     <string name="notification_permission_dialog_title">Prośba o pozwolenie</string>
-    <string name="notification_permission_dialog_text">EclipseLauncher wymaga uprawnień do wysyłania powiadomień, aby zapobiec zatrzymaniu pobierania po opuszczeniu aplikacji. Bez tego zezwolenia Android może zatrzymać pobieranie po opuszczeniu EclipseLauncher.</string>
+    <string name="notification_permission_dialog_text">Eclipse Launcher wymaga uprawnień do wysyłania powiadomień, aby zapobiec zatrzymaniu pobierania po opuszczeniu aplikacji. Bez tego zezwolenia Android może zatrzymać pobieranie po opuszczeniu Eclipse Launcher.</string>
     <string name="notification_permission_toast">Zawsze możesz zmienić to później przechodząc do Ustawień</string>
     <string name="preference_ask_for_notification_title">Zezwól na powiadomienia</string>
     <string name="preference_ask_for_notification_description">Kliknij, aby ponownie poprosić o uprawnienia do powiadomień, wymagane do poprawnego działania pobierania w tle.</string>
@@ -371,7 +371,6 @@
     <string name="controller_remapper_expand_entry">Rozwiń, aby zmienić przypisania przycisków</string>
     <string name="preference_remap_controller_title">Zmień przypisania przycisków kontrolera</string>
     <string name="preference_remap_controller_description">Pozwala na modyfikację przycisków klawiatury przypisanych do każdego przycisku kontrolera</string>
-    <string name="mcl_button_discord">Discord</string>
     <string name="ltw_render_distance_warning_msg">Twoje GPU nie jest kompatybilne z zasięgiem renderowania powyżej 7 bez Sodium lub innych podobnych modów. Zasięg renderowanie zostanie automatycznie zmniejszony, jeśli klikniesz \"OK\".</string>
     <string name="mcl_button_open_directory">Otwórz lokalizację plików gry</string>
     <string name="local_login_bad_username_title">Nieodpowiednia nazwa użytkownika</string>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition Android-hoz)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition Android-hoz)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -49,7 +49,7 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="mcl_setting_title_javaargs">JVM Indítási argumentumok</string>
     <string name="mcl_setting_subtitle_javaargs">Légy óvatos, kifagyasztja a játékot ha módosítod tudomány nélkül.</string>
     <string name="mcl_setting_category_renderer">Renderlő</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (összes verzió, gyors)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (összes verzió, gyors)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (összes verzió, közepes)</string>
     <string name="mcl_setting_veroption_release">Kiadás</string>
     <string name="mcl_setting_veroption_snapshot">Pillanatkép</string>

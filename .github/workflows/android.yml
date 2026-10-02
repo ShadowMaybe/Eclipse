@@ -1,137 +1,108 @@
-name: Android CI
+name: Build
 
 on:
   pull_request:
-    branches-ignore:
-      - 'l10n_v3_openjdk2'
-    types: [ opened, reopened ]
   push:
-    branches-ignore:
-      - 'l10n_v3_openjdk2'
+    branches: [ main ]
+    tags: [ 'v*' ]
   workflow_dispatch:
+
+# Builds are published to GitHub Releases, never to Actions artifacts.
+#   push a tag (v1.0)  -> a Release for that tag
+#   push to main       -> the rolling `nightly` prerelease
+permissions:
+  contents: write
+
+env:
+  APP_MODULE: app_eclipselauncher
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    env:
-      GPLAY_KEYSTORE_PASSWORD: ${{ secrets.GPLAY_KEYSTORE_PASSWORD }}
-      CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: "recursive"
+          # getVersionName() runs `git describe --tags`
+          fetch-depth: 0
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '21'
 
-      - name: Get LTW
+      # TODO(cobalt): once the Cobalt renderer (built from MojoLauncher/LTW)
+      # publishes here, point this at our own release instead.
+      - name: Fetch LTW renderer
         run: |
-          apt update && apt install wget
-          cd app_pojavlauncher/libs
-          wget https://github.com/PojavLauncherTeam/LTW/releases/latest/download/ltw-release.aar
+          mkdir -p ${{ env.APP_MODULE }}/libs
+          curl -fsSL -o ${{ env.APP_MODULE }}/libs/ltw-release.aar \
+            https://github.com/PojavLauncherTeam/LTW/releases/latest/download/ltw-release.aar
 
-      - name: Get JRE 8
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre
-          workflow_conclusion: success
-          repo: PojavLauncherTeam/android-openjdk-build-multiarch
-          branch: buildjre8
-          name: jre8-pojav
-
-      - name: Get JRE17
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-new
-          workflow_conclusion: success
-          repo: PojavLauncherTeam/android-openjdk-build-multiarch
-          branch: buildjre17-21
-          name: jre17-pojav
-
-      - name: Get JRE21
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-21
-          workflow_conclusion: success
-          repo: PojavLauncherTeam/android-openjdk-build-multiarch
-          branch: buildjre17-21
-          name: jre21-pojav
+      # JREs come from our own release, not from another team's Actions artifacts.
+      - name: Fetch JRE bundles
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p ${{ env.APP_MODULE }}/src/main/assets/components/{jre,jre-new,jre-21}
+          gh release download jres-v1.0.0 \
+            --repo ShadowMaybe/JRE-Builds-Android \
+            --pattern 'jre8-android-multiarch.zip' \
+            --pattern 'jre17-android-multiarch.zip' \
+            --pattern 'jre21-android-multiarch.zip'
+          unzip -q jre8-android-multiarch.zip  -d ${{ env.APP_MODULE }}/src/main/assets/components/jre
+          unzip -q jre17-android-multiarch.zip -d ${{ env.APP_MODULE }}/src/main/assets/components/jre-new
+          unzip -q jre21-android-multiarch.zip -d ${{ env.APP_MODULE }}/src/main/assets/components/jre-21
+          rm -f jre*-android-multiarch.zip
+          ls -la ${{ env.APP_MODULE }}/src/main/assets/components/jre-new
 
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: "8.11"
+          gradle-version: '8.11'
 
-      - name: Build JRE JAR files
+      - name: Build LWJGL component jar
+        run: gradle :jre_lwjgl3glfw:build --no-daemon
+
+      - name: Build the launcher
+        env:
+          # Optional: add these repository secrets to sign with your own key.
+          # Without them the build falls back to the committed debug keystore.
+          ECLIPSE_KEYSTORE_PASSWORD: ${{ secrets.ECLIPSE_KEYSTORE_PASSWORD }}
+          ECLIPSE_KEY_ALIAS: ${{ secrets.ECLIPSE_KEY_ALIAS }}
+          ECLIPSE_KEY_PASSWORD: ${{ secrets.ECLIPSE_KEY_PASSWORD }}
         run: |
-          ./scripts/languagelist_updater.sh
+          set -euo pipefail
+          gradle :${{ env.APP_MODULE }}:assembleRelease --no-daemon
+          mkdir -p out
+          cp ${{ env.APP_MODULE }}/build/outputs/apk/release/${{ env.APP_MODULE }}-release.apk \
+             out/Eclipse-Launcher.apk || \
+          cp ${{ env.APP_MODULE }}/build/outputs/apk/release/${{ env.APP_MODULE }}-release-unsigned.apk \
+             out/Eclipse-Launcher.apk
+          (cd out && sha256sum Eclipse-Launcher.apk > SHA256SUMS.txt)
+          cat out/SHA256SUMS.txt
 
-          mkdir out
-          # Build JRE JAR files (security manager, etc...)
-          gradle :jre_lwjgl3glfw:build --no-daemon
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      - name: Build Google Play .aab
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
+      - name: Publish to a Release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          gradle :app_pojavlauncher:bundleGplay
-          mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
+          set -euo pipefail
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            TAG="$GITHUB_REF_NAME"
+            PRERELEASE=""
+          else
+            TAG="nightly"
+            PRERELEASE="--prerelease"
+          fi
 
-      - name: Build Debug .apk
-        run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleDebug
-          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug.apk
-
-      - name: Build APK without runtime
-        run: |
-          rm -r app_pojavlauncher/src/main/assets/components/jre
-          rm -r app_pojavlauncher/src/main/assets/components/jre-new
-          rm -r app_pojavlauncher/src/main/assets/components/jre-21
-          gradle assembleDebug
-          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug-noruntime.apk
-      - name: Gen md5sums
-        run: |
-          md5sum out/app-debug.apk > out/app-debug.md5
-          md5sum out/app-debug-noruntime.apk > out/app-debug-noruntime.md5
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug
-          path: out/app-debug.*
-
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-aab
-          path: out/app-gplay.aab
-
-      - name: Upload onto the Google Play testing track
-        continue-on-error: true
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
-        uses: r0adkll/upload-google-play@v1.1.2
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GPLAY_SERVICE_JSON }}
-          packageName: net.kdt.pojavlaunch
-          releaseFiles: out/app-gplay.aab
-          track: internal
-          inAppUpdatePriority: 5
-
-      - name: Upload APK (without runtime)
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug-noruntime
-          path: out/app-debug-noruntime.*
-
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" out/Eclipse-Launcher.apk out/SHA256SUMS.txt --clobber
+          else
+            gh release create "$TAG" out/Eclipse-Launcher.apk out/SHA256SUMS.txt \
+              $PRERELEASE \
+              --title "Eclipse Launcher $TAG" \
+              --notes "Automated build of $TAG from ${GITHUB_SHA}."
+          fi
+          echo "Published:"
+          gh release view "$TAG" --json assets -q '.assets[].name'

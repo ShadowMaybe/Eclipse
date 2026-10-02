@@ -104,7 +104,7 @@ public final class Tools {
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static final String URL_HOME = "https://eclipselauncherteam.github.io";
+    public static final String URL_HOME = "https://github.com/ShadowMaybe/Eclipse";
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
     public static File DIR_CACHE;
@@ -1292,7 +1292,7 @@ public final class Tools {
         // Currently, only 32-bit x86 does not have the Zink binary
         boolean deviceHasZinkBinary = !(Architecture.is32BitsDevice() && Architecture.isx86Device());
         boolean deviceHasOpenGLES3 = JREUtils.getDetectedVersion() >= 3;
-        // LTW is an optional proprietary dependency
+        // LTW is an optional, separately-built renderer dependency
         boolean appHasLtw = new File(Tools.NATIVE_LIB_DIR, "libltw.so").exists();
         List<String> rendererIds = new ArrayList<>(defaultRenderers.length);
         List<String> rendererNames = new ArrayList<>(defaultRendererNames.length);

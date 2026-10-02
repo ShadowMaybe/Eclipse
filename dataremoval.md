@@ -1,15 +1,21 @@
-# Remove PojavLauncher account data
-PojavLauncher uses two types of accounts:
-- Local accounts
-- Microsoft accounts
-<br>
+# Removing account data from Eclipse Launcher
 
-If you wish to remove a local account or a Microsoft account from the launcher:<br>
-1. Select the account that you wish to remove in the account selector
-2. Press the trash bin button
-3. All account data stored in the launcher will be removed immediately.
-<br>
+Eclipse Launcher stores two kinds of accounts:
 
-Your account data is not shared with any third parties (except Microsoft, of course)<br>
-If you need to remove all of your Microsoft account data, go to:<br>
-https://aka.ms/CloseAccount
+- **Local accounts** (username only, stored on this device)
+- **Microsoft accounts** (sign-in handled by Microsoft)
+
+## Remove an account from the launcher
+
+1. Open the account selector.
+2. Select the account you want to remove.
+3. Press the trash-bin button.
+
+All launcher-held data for that account is deleted immediately.
+
+Account data is not shared with any third parties (other than Microsoft, for
+sign-in).
+
+## Remove your Microsoft account data entirely
+
+Use Microsoft's own closure page: <https://aka.ms/CloseAccount>

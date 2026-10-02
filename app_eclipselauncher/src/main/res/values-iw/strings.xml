@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition for Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition for Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">בחר מתקין mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher קרס באופן בלתי צפוי</string>
+    <string name="error_fatal">Eclipse Launcher קרס באופן בלתי צפוי</string>
     <string name="error_no_version">אין גרסה!</string>
     <string name="error_show_more">הצג עוד</string>
     <string name="error_show_less">הצג פחות</string>
@@ -48,7 +48,7 @@
     <string name="mcl_setting_title_javaargs">פרמטרים להפעלת JVM</string>
     <string name="mcl_setting_subtitle_javaargs">זהירות! שינוי ערכים אלה ללא ידע מתאים עלול לגרום למשחק לקרוס.</string>
     <string name="mcl_setting_category_renderer">רינדור</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (כל הגרסאות, מהיר)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (כל הגרסאות, מהיר)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (כל הגרסאות, בינוני)</string>
     <string name="mcl_setting_veroption_release">הפצה</string>
     <string name="mcl_setting_veroption_snapshot">סנאפשוט</string>
@@ -215,7 +215,7 @@
     <string name="preference_gyro_sample_rate_title">קצב דגימת חיישן הכיוון</string>
     <string name="preference_gyro_sample_rate_description">אם אתם חווים בעיות ביצועים עם בקרי חיישן הכיוון, הגדילו ערך זה.</string>
     <string name="microsoft_login_retry_later">יותר מדי בקשות, נסו שוב מאוחר יותר.</string>
-    <string name="storage_required">EclipseLauncher דורש אחסון חיצוני מחובר. אנא חבר אותו מחדש והפעל מחדש את האפליקציה.</string>
+    <string name="storage_required">Eclipse Launcher דורש אחסון חיצוני מחובר. אנא חבר אותו מחדש והפעל מחדש את האפליקציה.</string>
     <string name="mcl_setting_title_buttonallcaps">השתמש באותיות גדולות בלבד בתוויות הכפתורים.</string>
     <string name="mcl_setting_subtitle_buttonallcaps">השבת אפשרות זו אם ברצונך להשתמש באותיות קטנות בבקרים שלך.</string>
     <string name="create_profile">צור פרופיל חדש</string>

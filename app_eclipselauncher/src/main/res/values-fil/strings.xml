@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition for Android) Translation By Justine Victorino or EnderProJustine</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition for Android) Translation By Justine Victorino or EnderProJustine</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Pumili ng mod installer</string>
     <!-- Error messages -->
-    <string name="error_fatal">Ang EclipseLauncher ay hindi inaasahang nag-crash</string>
+    <string name="error_fatal">Ang Eclipse Launcher ay hindi inaasahang nag-crash</string>
     <string name="error_no_version">Walang bersyon!</string>
     <string name="error_show_more">Magpakita ng higit pa</string>
     <string name="error_show_less">Magpakita ng kaunti</string>
@@ -43,7 +43,7 @@
     <string name="mcl_setting_title_javaargs">JVM Launch arguments</string>
     <string name="mcl_setting_subtitle_javaargs">Mag-ingat, maaari itong mag-crash ng laro kung babaguhin nang walang kaalaman.</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy Gl4ES - (lahat ng bersyon, mabilis)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (lahat ng bersyon, mabilis)</string>
     <string name="mcl_setting_veroption_release">Release</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Lumang-alpha</string>

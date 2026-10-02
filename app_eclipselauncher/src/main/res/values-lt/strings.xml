@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition skirta Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition skirta Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Pasirinkite modifikacijų įdiegimui</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher netikėtai išsijungė arba užlužo</string>
+    <string name="error_fatal">Eclipse Launcher netikėtai išsijungė arba užlužo</string>
     <string name="error_no_version">Nėra versijos!</string>
     <string name="error_show_more">Rodyti daugiau</string>
     <string name="error_show_less">Rodyti mažiau</string>
@@ -44,7 +44,7 @@
     <string name="mcl_setting_title_javaargs">JVM Paleidimo argumentai</string>
     <string name="mcl_setting_subtitle_javaargs">Būkite atsargūs, tai gali paveikti žaidimą jei modifikuota be išmonės.</string>
     <string name="mcl_setting_category_renderer">Vaizdo generatorius</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (visos versijos, greičiausias)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (visos versijos, greičiausias)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (visos versijos, vidutinis)</string>
     <string name="mcl_setting_veroption_release">Leidimai</string>
     <string name="mcl_setting_veroption_snapshot">Naujinimai</string>

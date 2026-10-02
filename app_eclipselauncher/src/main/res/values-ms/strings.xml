@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition untuk Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition untuk Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Pilih sebuah pemasang mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher terhenti tanpa diduga</string>
+    <string name="error_fatal">Eclipse Launcher terhenti tanpa diduga</string>
     <string name="error_no_version">Tiada versi!</string>
     <string name="error_show_more">Tunjuk lebih banyak</string>
     <string name="error_show_less">Tunjuk lebih sedikit</string>
@@ -41,7 +41,7 @@
     <string name="mcl_setting_title_javaargs">JVM Launch arguments</string>
     <string name="mcl_setting_subtitle_javaargs">Berhati-hati, ini mungkin menyebabkan permainan menjadi ranap jika diubah tanpa pengetahuan.</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (semua versi, pantas)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (semua versi, pantas)</string>
     <string name="mcl_setting_veroption_release">Rilis</string>
     <string name="mcl_setting_veroption_snapshot">Petikan</string>
     <string name="mcl_setting_veroption_oldalpha">Alfa-lama</string>

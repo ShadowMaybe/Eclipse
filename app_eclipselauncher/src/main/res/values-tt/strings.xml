@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Android өчен Minecraft: Java Edition)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Android өчен Minecraft: Java Edition)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Мод утырткычын сайлагыз</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher сафтан көтелмичә чыкты</string>
+    <string name="error_fatal">Eclipse Launcher сафтан көтелмичә чыкты</string>
     <string name="error_no_version">Версия юк!</string>
     <string name="error_show_more">Күбрәк күрсәтү</string>
     <string name="error_show_less">Әзрәк күрсәтү</string>
@@ -38,7 +38,7 @@
     <string name="mcl_setting_title_mousescale">Курсор масштабы</string>
     <string name="mcl_setting_title_javaargs">JVM кушу аргументлары</string>
     <string name="mcl_setting_category_renderer">Күрсәткеч</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (барлык версияләр өчен, тиз)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (барлык версияләр өчен, тиз)</string>
     <string name="mcl_setting_veroption_release">Чыгарылыш</string>
     <string name="mcl_setting_veroption_snapshot">Снапшотлар</string>
     <string name="mcl_setting_veroption_oldalpha">Иске альфа</string>

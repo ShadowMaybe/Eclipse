@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition Androidile)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition Androidile)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -31,7 +31,7 @@
     <string name="mcl_setting_title_buttonscale">Juhtnuppude suurus</string>
     <string name="mcl_setting_title_mousescale">Kursori suurus</string>
     <string name="mcl_setting_category_renderer">Renderdaja</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (kõik versioonid, kiire)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (kõik versioonid, kiire)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (kõik versioonid, keskm.)</string>
     <string name="mcl_setting_veroption_release">Väljalase</string>
     <string name="mcl_setting_veroption_snapshot">Katsetus</string>

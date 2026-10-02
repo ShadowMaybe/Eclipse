@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition for Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition for Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -15,7 +15,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">حدد مشغل مودات لتثبيته</string>
     <!-- Error messages -->
-    <string name="error_fatal">لقد توقف EclipseLauncher بشكل غير متوقع</string>
+    <string name="error_fatal">لقد توقف Eclipse Launcher بشكل غير متوقع</string>
     <string name="error_no_version">لا يوجد إصدار!</string>
     <string name="error_show_more">اظهر المزيد</string>
     <string name="error_show_less">أظهِر أقل</string>
@@ -50,7 +50,7 @@
     <string name="mcl_setting_title_javaargs">معلمات بَدْء تشغيل JVM</string>
     <string name="mcl_setting_subtitle_javaargs">كن حذرا، تعديلها بغير علم قد يتسبب بتعطيل اللعبة.</string>
     <string name="mcl_setting_category_renderer">عارض الرسوميات</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (جميع الإصدارات، سريع)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (جميع الإصدارات، سريع)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (جميع الإصدارات، متوسط)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ فقط</string>
     <string name="mcl_setting_veroption_release">إصدار نهائي</string>
@@ -234,7 +234,7 @@
     <string name="preference_gyro_sample_rate_title">معدل أخذ العينات من الجايرسكوب</string>
     <string name="preference_gyro_sample_rate_description">اذا كان لديك مشاكل أداء في الجايروسكوب، زد هذا الخيار.</string>
     <string name="microsoft_login_retry_later">طلبات كثيرة جداً، الرجاء المحاولة مرة أخرى لاحقاً.</string>
-    <string name="storage_required">يتطلب EclipseLauncher أن تكون وحدة التخزين الخارجية متصلة. الرجاء إعادة الاتصال بها وإعادة تشغيل التطبيق.</string>
+    <string name="storage_required">يتطلب Eclipse Launcher أن تكون وحدة التخزين الخارجية متصلة. الرجاء إعادة الاتصال بها وإعادة تشغيل التطبيق.</string>
     <string name="mcl_setting_title_buttonallcaps">استخدم الأحرف الكبيرة فقط في اسماء الأزرار</string>
     <string name="mcl_setting_subtitle_buttonallcaps">عطل هذا اذا كنت تريد إستخدام الأحرف الصغيرة.</string>
     <string name="create_profile">إنشاء ملف شخصي جديد</string>
@@ -316,7 +316,7 @@
     <string name="preference_category_miscellaneous">أعدادات متنوعة</string>
     <string name="preference_category_video">إعدادات الفيديو</string>
     <string name="notification_permission_dialog_title">طلب السماح</string>
-    <string name="notification_permission_dialog_text">EclipseLauncher requires a permission to post notifications to prevent game/modpack downloads from stopping when you leave the app. Without this permission, Android may shut down your downloads when you put EclipseLauncher in background mode.</string>
+    <string name="notification_permission_dialog_text">Eclipse Launcher requires a permission to post notifications to prevent game/modpack downloads from stopping when you leave the app. Without this permission, Android may shut down your downloads when you put Eclipse Launcher in background mode.</string>
     <string name="notification_permission_toast">O</string>
     <string name="preference_ask_for_notification_title">السماح بالإشعارات</string>
     <string name="preference_ask_for_notification_description">.</string>
@@ -368,7 +368,6 @@
     <string name="controller_remapper_expand_entry">قم بالتوسعة لتغيير رمز الزر</string>
     <string name="preference_remap_controller_title">تغيير إعدادات مفاتيح التحكم</string>
     <string name="preference_remap_controller_description">يسمح لك بتعديل المفتاح المخصص لكل زر في وحدة التحكم</string>
-    <string name="mcl_button_discord">سيرفر الديسكورد</string>
     <string name="ltw_render_distance_warning_msg">وحدة معالجة الرسوميات الخاصة بك غير قادرة على معالجة أكثر من 7 رندر ديستانس دون مود Sodium أو غيرها من المودات المشابهة. سيتم تخفيض الرندر ديستانس تلقائيًا عند النقر على \"موافق\".</string>
     <string name="mcl_button_open_directory">فتح ملفات اللعبة</string>
     <string name="local_login_bad_username_title">اسم المستخدم غير مناسب</string>

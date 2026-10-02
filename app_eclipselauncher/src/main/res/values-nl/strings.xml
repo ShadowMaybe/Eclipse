@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition voor Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition voor Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Selecteer een mod installatie</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher is onverwacht gecrasht</string>
+    <string name="error_fatal">Eclipse Launcher is onverwacht gecrasht</string>
     <string name="error_no_version">Geen versie!</string>
     <string name="error_show_more">Meer weergeven</string>
     <string name="error_show_less">Minder weergeven</string>
@@ -48,7 +48,7 @@
     <string name="mcl_setting_title_javaargs">JVM Launch argumenten</string>
     <string name="mcl_setting_subtitle_javaargs">Wees voorzichtig, dit kan een spelcrash maken als het is aangepast zonder kennis.</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (alle versies, snel)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (alle versies, snel)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle versies, middelmatig)</string>
     <string name="mcl_setting_veroption_release">Release</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -260,7 +260,7 @@
     <string name="preference_category_miscellaneous">Overige instellingen</string>
     <string name="preference_category_video">Video-instellingen</string>
     <string name="notification_permission_dialog_title">Verzoek om toestemming</string>
-    <string name="notification_permission_dialog_text">EclipseLauncher heeft toestemming nodig om meldingen te plaatsen om te voorkomen dat downloads van game/modpack stoppen wanneer je de app verlaat. Zonder deze toestemming kan Android je downloads afsluiten als je EclipseLauncher in de achtergrondmodus plaatst.</string>
+    <string name="notification_permission_dialog_text">Eclipse Launcher heeft toestemming nodig om meldingen te plaatsen om te voorkomen dat downloads van game/modpack stoppen wanneer je de app verlaat. Zonder deze toestemming kan Android je downloads afsluiten als je Eclipse Launcher in de achtergrondmodus plaatst.</string>
     <string name="notification_permission_toast">U kunt later altijd van gedachten veranderen door naar Instellingen te gaan</string>
     <string name="preference_ask_for_notification_title">Meldingen toestaan</string>
     <string name="preference_ask_for_notification_description">Klik om de meldingsmachtiging opnieuw op te vragen, vereist voor game/modpack achtergrond downloads om correct te werken.</string>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">EclipseLauncher (Minecraft: Java Edition pre Android)</string>
-    <string name="app_short_name">EclipseLauncher</string>
+    <string name="app_name">Eclipse Launcher (Minecraft: Java Edition pre Android)</string>
+    <string name="app_short_name">Eclipse Launcher</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Vybrať installer módu</string>
     <!-- Error messages -->
-    <string name="error_fatal">EclipseLauncher neočakávane spadol</string>
+    <string name="error_fatal">Eclipse Launcher neočakávane spadol</string>
     <string name="error_no_version">Žiadne verzie!</string>
     <string name="error_show_more">Zobraziť viac</string>
     <string name="error_show_less">Zobraziť menej</string>
@@ -48,7 +48,7 @@
     <string name="mcl_setting_title_javaargs">Spúštacie argumenty pre JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Pozor! Zmena JVM argumentov môže spôsobiť pád hry ak neviete, čo robíte.</string>
     <string name="mcl_setting_category_renderer">Vykresľovač</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (všetky verzie, rýchly)</string>
+    <string name="mcl_setting_renderer_gles2_4">GL4ES - (všetky verzie, rýchly)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink - (všetky verzie, priemerný)</string>
     <string name="mcl_setting_veroption_release">Vydanie</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -226,7 +226,7 @@
     <string name="preference_gyro_sample_rate_title">Obnovovacia frekvencia gyroskopu</string>
     <string name="preference_gyro_sample_rate_description">Ak máte problémy s výkonom pri používaní ovládania gyroskopom, zvýšte toto.</string>
     <string name="microsoft_login_retry_later">Príliš veľa žiadostí. Skúste to neskôr, prosím.</string>
-    <string name="storage_required">EclipseLauncher vyžaduje pripojené externé úložisko. Pripojte ho a reštartujte aplikáciu.</string>
+    <string name="storage_required">Eclipse Launcher vyžaduje pripojené externé úložisko. Pripojte ho a reštartujte aplikáciu.</string>
     <string name="mcl_setting_title_buttonallcaps">V označeniach tlačidiel používať len veľké písmená</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Ak chcete v ovládacích prvkoch používať malé písmená, vypnite toto.</string>
     <string name="create_profile">Vytvoriť nový profil</string>
@@ -310,7 +310,7 @@
     <string name="preference_category_miscellaneous">Iné nastavenia</string>
     <string name="preference_category_video">Video a vykresľovač</string>
     <string name="notification_permission_dialog_title">Vyžaduje sa povolenie</string>
-    <string name="notification_permission_dialog_text">EclipseLauncher vyžaduje povolenie na ukazovanie upozornení, aby sa zabránilo zastaveniu sťahovania hry/modpackov, keď opustíte aplikáciu. Bez tohto povolenia môže Android zastaviť sťahovanie, keď pošlete EclipseLauncher do pozadia.</string>
+    <string name="notification_permission_dialog_text">Eclipse Launcher vyžaduje povolenie na ukazovanie upozornení, aby sa zabránilo zastaveniu sťahovania hry/modpackov, keď opustíte aplikáciu. Bez tohto povolenia môže Android zastaviť sťahovanie, keď pošlete Eclipse Launcher do pozadia.</string>
     <string name="notification_permission_toast">Toto povolenie môžete kedykoľvek zmeniť v nastaveniach</string>
     <string name="preference_ask_for_notification_title">Povoliť upozornenia</string>
     <string name="preference_ask_for_notification_description">Kliknutím znova požiadate o povolenie upozornení, ktoré je potrebné na správne fungovanie sťahovania hier/modpackov na pozadí.</string>

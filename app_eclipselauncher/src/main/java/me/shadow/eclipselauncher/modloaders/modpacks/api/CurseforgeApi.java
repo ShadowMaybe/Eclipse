@@ -33,8 +33,7 @@ import java.util.zip.ZipFile;
 public class CurseforgeApi implements ModpackApi{
     private static final Pattern sMcVersionPattern = Pattern.compile("([0-9]+)\\.([0-9]+)\\.?([0-9]+)?");
     private static final int ALGO_SHA_1 = 1;
-    // Stolen from
-    // https://github.com/AnzhiZhang/CurseForgeModpackDownloader/blob/6cb3f428459f0cc8f444d16e54aea4cd1186fd7b/utils/requester.py#L93
+    // CurseForge's game id for Minecraft, cf. /v1/categories?gameId=432
     private static final int CURSEFORGE_MINECRAFT_GAME_ID = 432;
     private static final int CURSEFORGE_MODPACK_CLASS_ID = 4471;
     // https://api.curseforge.com/v1/categories?gameId=432 and search for "Mods" (case-sensitive)
