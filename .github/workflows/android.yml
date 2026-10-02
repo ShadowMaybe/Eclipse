@@ -50,13 +50,34 @@ jobs:
           echo "eclipseexec AAR present:"
           ls -la ${{ env.APP_MODULE }}/libs
 
-      # TODO(cobalt): once the Cobalt renderer (built from MojoLauncher/LTW)
-      # publishes here, point this at our own release instead.
-      - name: Fetch LTW renderer
+      # LTW has no releases, only 90-day Actions artifacts, so we build it from a pinned
+      # source ref rather than depending on another team's artifacts.
+      #
+      # MojoLauncher/LTW (LGPL-3.0) is required over the archived PojavLauncherTeam/LTW we
+      # used to curl: its translator kept uniform-block dedup in a process-global table of
+      # pointers that were freed after every conversion, compared by address not by name.
+      # Depending on allocation order a block was either dropped or emitted twice, which is
+      # what produced the 1.21.6+ core-profile failures:
+      #   'DynamicTransforms' : redefinition  +  UBO/SSBO symbol creation failed
+      #   'ProjMat'/'ColorModulator'/'FogColor' : undeclared
+      # Mojo fixed that table (4ad1b874) and adds the 1.21.11 timer-query fix (PR #12).
+      - name: Checkout LTW renderer source
+        uses: actions/checkout@v4
+        with:
+          repository: MojoLauncher/LTW
+          ref: 11f1b36f701e69731d685e94c6788e60d829ea35
+          path: ltw-src
+
+      - name: Build LTW renderer
         run: |
+          set -euo pipefail
+          chmod +x ltw-src/gradlew
+          (cd ltw-src && ./gradlew :ltw:assembleRelease --no-daemon)
+          test -s ltw-src/ltw/build/outputs/aar/ltw-release.aar
           mkdir -p ${{ env.APP_MODULE }}/libs
-          curl -fsSL -o ${{ env.APP_MODULE }}/libs/ltw-release.aar \
-            https://github.com/PojavLauncherTeam/LTW/releases/latest/download/ltw-release.aar
+          cp ltw-src/ltw/build/outputs/aar/ltw-release.aar ${{ env.APP_MODULE }}/libs/
+          echo "LTW AAR present:"
+          ls -la ${{ env.APP_MODULE }}/libs
 
       # JREs come from our own release, not from another team's Actions artifacts.
       - name: Fetch JRE bundles

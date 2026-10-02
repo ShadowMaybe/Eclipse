@@ -102,8 +102,10 @@ repository secrets (or environment variables locally):
   been removed. Fabric, Quilt, modpacks and BTA install normally.
   A headless installer that reads `version.json` out of the installer jar is
   planned for a follow-up.
-* The **LTW** renderer is still fetched at build time from upstream; it will be
-  replaced by **Cobalt**, built from [`MojoLauncher/LTW`](https://github.com/MojoLauncher/LTW).
+* The **LTW** renderer is built at CI time from a pinned
+  [`MojoLauncher/LTW`](https://github.com/MojoLauncher/LTW) revision instead of being
+  fetched from the archived upstream release. It will be replaced by **Cobalt** in a
+  follow-up.
 * `libgl4es_114.so` will be rebranded to **OmniGL** in a follow-up.
 
 ---
