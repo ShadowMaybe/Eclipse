@@ -27,6 +27,7 @@
 #include "utils.h"
 #include "ctxbridges/bridge_tbl.h"
 #include "ctxbridges/osm_bridge.h"
+#include "ctxbridges/eclipseexec_loader.h"
 
 #define GLFW_CLIENT_API 0x22001
 /* Consider GLFW_NO_API as Vulkan API */
@@ -156,6 +157,13 @@ void load_vulkan() {
 }
 
 int eclipseInitOpenGL() {
+    // Publish the renderer facts to libeclipseexec.so before any bridge starts work: this
+    // is where the native dir, Turnip selection, display geometry and EGL path get handed
+    // over, and both br_init() paths below consume the result. Idempotent, and a plain
+    // no-op when the AAR was not fetched - in which case the bridges resolve EGL exactly
+    // the way they did before this integration.
+    eclipseexec_load();
+
     // Only affects GL4ES as of now
     const char *forceVsync = getenv("FORCE_VSYNC");
     if (strcmp(forceVsync, "true") == 0)

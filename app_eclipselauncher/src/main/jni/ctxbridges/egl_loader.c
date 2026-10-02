@@ -6,6 +6,7 @@
 #include <dlfcn.h>
 #include "egl_loader.h"
 #include "loader_dlopen.h"
+#include "eclipseexec_loader.h"
 
 EGLBoolean (*eglMakeCurrent_p) (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 EGLBoolean (*eglDestroyContext_p) (EGLDisplay dpy, EGLContext ctx);
@@ -31,8 +32,19 @@ EGLBoolean (*eglQuerySurface_p)( 	EGLDisplay display,
                                            EGLint * value);
 __eglMustCastToProperFunctionPointerType (*eglGetProcAddress_p) (const char *procname);
 
+/*
+ * Prefer the handle eclipseexec loaded the GL driver through: it is the same library
+ * getenv("ECLIPSE_EGL") below would have opened, only owned in one place and with
+ * eclipseexec_error() to say why when it is not. eclipseexec_load() is idempotent and
+ * tolerates the AAR being absent, so the old path still runs whenever eclipseexec has
+ * nothing to offer - a build with no AAR behaves exactly as it did before this integration.
+ */
 bool dlsym_EGL() {
-    void* dl_handle = loader_dlopen(getenv("ECLIPSE_EGL"),"libEGL.so", RTLD_LOCAL|RTLD_LAZY);
+    eclipseexec_load();
+    void* dl_handle = eclipseexec_egl_handle();
+    if (dl_handle == NULL) {
+        dl_handle = loader_dlopen(getenv("ECLIPSE_EGL"),"libEGL.so", RTLD_LOCAL|RTLD_LAZY);
+    }
     if(dl_handle == NULL) return false;
     eglGetProcAddress_p = dlsym(dl_handle, "eglGetProcAddress");
     if(eglGetProcAddress_p == NULL) {

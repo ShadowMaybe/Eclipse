@@ -16,6 +16,10 @@ include $(CLEAR_VARS)
 LOCAL_LDLIBS := -ldl -llog -landroid
 # -lGLESv2
 LOCAL_MODULE := eclipsebridge
+# ctxbridges/*.c includes the vendored eclipseexec.h contract from the jni root, and
+# <environ/environ.h> already relies on the same search path - state it so the contract
+# header cannot go missing if the default include set changes.
+LOCAL_C_INCLUDES += $(LOCAL_PATH)
 # LOCAL_CFLAGS += -DDEBUG
 # -DGLES_TEST
 LOCAL_SRC_FILES := \
@@ -24,6 +28,7 @@ LOCAL_SRC_FILES := \
     ctxbridges/gl_bridge.c \
     ctxbridges/osm_bridge.c \
     ctxbridges/egl_loader.c \
+    ctxbridges/eclipseexec_loader.c \
     ctxbridges/osmesa_loader.c \
     ctxbridges/swap_interval_no_egl.c \
     environ/environ.c \

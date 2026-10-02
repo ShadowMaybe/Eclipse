@@ -5,6 +5,7 @@
 #include <string.h>
 #include <environ/environ.h>
 #include "osm_bridge.h"
+#include "eclipseexec_loader.h"
 #define TAG __FILE_NAME__
 #include <log.h>
 
@@ -85,6 +86,10 @@ void osm_apply_current_ll() {
 }
 
 void osm_make_current(osm_render_window_t* bundle) {
+    // The zink path draws from this thread too, so pin it for the same reason gl_bridge
+    // does. eclipseexec dedupes per thread and is a no-op when the AAR is absent.
+    eclipseexec_pin_render_thread();
+
     if(bundle == NULL) {
         //technically this does nothing as its not possible to unbind a context in OSMesa
         OSMesaMakeCurrent_p(NULL, NULL, 0, 0, 0);

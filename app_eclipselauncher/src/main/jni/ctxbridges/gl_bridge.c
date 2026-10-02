@@ -9,6 +9,7 @@
 #include <environ/environ.h>
 #include "gl_bridge.h"
 #include "egl_loader.h"
+#include "eclipseexec_loader.h"
 
 #define TAG __FILE_NAME__
 #include <log.h>
@@ -122,6 +123,11 @@ void gl_swap_surface(gl_render_window_t* bundle) {
 }
 
 void gl_make_current(gl_render_window_t* bundle) {
+
+    // One of the two points where "the thread that will be drawing" has just been decided -
+    // SDL pins at the same two. eclipseexec dedupes per thread, so after the first call on
+    // this thread the cost is a thread-local test; without the AAR it does nothing.
+    eclipseexec_pin_render_thread();
 
     if(bundle == NULL) {
         if(eglMakeCurrent_p(g_EglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT)) {

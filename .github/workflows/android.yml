@@ -32,6 +32,24 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      # The Eclipse native stack comes from our own releases, not another team's.
+      # libeclipseexec.so is only reachable through this AAR, and ctxbridges/ binds to it
+      # with dlopen at run time - so a missing download would still produce a green build
+      # that quietly does nothing. Fail the job here instead of shipping that.
+      - name: Fetch Eclipse native stack
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p ${{ env.APP_MODULE }}/libs
+          gh release download v0.1.0 \
+            --repo ShadowMaybe/eclipseexec \
+            --pattern 'eclipseexec-v0.1.0.aar' \
+            --dir ${{ env.APP_MODULE }}/libs
+          test -s ${{ env.APP_MODULE }}/libs/eclipseexec-v0.1.0.aar
+          echo "eclipseexec AAR present:"
+          ls -la ${{ env.APP_MODULE }}/libs
+
       # TODO(cobalt): once the Cobalt renderer (built from MojoLauncher/LTW)
       # publishes here, point this at our own release instead.
       - name: Fetch LTW renderer
