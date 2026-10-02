@@ -1336,8 +1336,17 @@ public final class Tools {
                 }).show();
     }
 
-    public static boolean isLocalProfile(Context ctx){
+    /**
+     * The account the game is launched with.
+     *
+     * Launching never depends on having signed in: when no profile has been saved yet a throwaway local account is
+     * returned, so a first run reaches the game without anyone having to authenticate. Signing in only buys what
+     * Minecraft itself gates behind a token - online servers, skins, Realms - and never a launcher feature.
+     */
+    public static MinecraftAccount getLaunchAccount(Context ctx){
         MinecraftAccount currentProfile = EclipseProfile.getCurrentProfileContent(ctx, null);
-        return currentProfile == null || currentProfile.isLocal();
+        if(currentProfile != null) return currentProfile;
+        // The field defaults of MinecraftAccount are already a local profile: accessToken "0" makes isLocal() true.
+        return new MinecraftAccount();
     }
 }

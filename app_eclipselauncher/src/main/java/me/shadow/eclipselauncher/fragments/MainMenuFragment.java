@@ -89,12 +89,6 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void runInstallerWithConfirmation(boolean isCustomArgs) {
-        // avoid using custom installers to install a version
-        if(Tools.isLocalProfile(requireContext())){
-            Toast.makeText(requireContext(), R.string.not_available_without_account, Toast.LENGTH_LONG).show();
-            return;
-        }
-
         if (ProgressKeeper.getTaskCount() == 0)
             Tools.installMod(requireActivity(), isCustomArgs);
         else

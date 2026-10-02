@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -119,9 +120,10 @@ public class LauncherActivity extends BaseActivity {
         }
 
         if(mAccountSpinner.getSelectedAccount() == null){
-            Toast.makeText(this, R.string.no_saved_accounts, Toast.LENGTH_LONG).show();
-            ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
-            return false;
+            // Nothing is saved yet, which is not a reason to refuse a launch: the game runs on the local account
+            // that Tools.getLaunchAccount() falls back to. Signing in stays something you choose to do, not a gate.
+            // Logcat rather than Logger: the log file only exists once MainActivity has started the game.
+            Log.i("LauncherActivity", "No account saved, launching with the default local profile");
         }
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
