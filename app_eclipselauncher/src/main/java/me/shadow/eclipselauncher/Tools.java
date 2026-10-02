@@ -201,7 +201,6 @@ public final class Tools {
         CTRLMAP_PATH = DIR_GAME_HOME + "/controlmap";
         CTRLDEF_FILE = DIR_GAME_HOME + "/controlmap/default.json";
         GAME_PROFILES_FILE = Tools.DIR_GAME_NEW + "/launcher_profiles.json";
-        switchDemo(isDemoProfile(ctx));
     }
 
     /**
@@ -412,7 +411,7 @@ public final class Tools {
     }
 
     public static String[] getMinecraftClientArgs(MinecraftAccount profile, JMinecraftVersionList.Version versionInfo, File gameDir) {
-        String username = profile.username.replace("Demo.", "");
+        String username = profile.username;
         String versionName = versionInfo.id;
         if (versionInfo.inheritsFrom != null) {
             versionName = versionInfo.inheritsFrom;
@@ -460,8 +459,6 @@ public final class Tools {
         String mcArguments = versionInfo.minecraftArguments == null ?
                 fromStringArray(minecraftArgs.toArray(new String[0])):
                 versionInfo.minecraftArguments;
-
-        if(profile.isDemo()) mcArguments += " --demo";
 
         return JSONUtils.insertJSONValueList(splitAndFilterEmpty(mcArguments), varArgMap);
     }
@@ -1337,23 +1334,6 @@ public final class Tools {
                         Log.w(Tools.APP_NAME, "Could not enable System.exit() method!", th);
                     }
                 }).show();
-    }
-
-    public static void switchDemo(boolean isDemo){
-        if(isDemo) {
-            DIR_GAME_NEW = DIR_DATA + "/demo/.minecraft";
-        } else {
-            DIR_GAME_NEW = DIR_GAME_HOME + "/.minecraft";
-        }
-        DIR_HOME_VERSION = DIR_GAME_NEW + "/versions";
-        DIR_HOME_LIBRARY = DIR_GAME_NEW + "/libraries";
-        ASSETS_PATH = DIR_GAME_NEW + "/assets";
-        OBSOLETE_RESOURCES_PATH = DIR_GAME_NEW + "/resources";
-    }
-
-    public static boolean isDemoProfile(Context ctx){
-        MinecraftAccount currentProfile = EclipseProfile.getCurrentProfileContent(ctx, null);
-        return currentProfile != null && currentProfile.isDemo();
     }
 
     public static boolean isLocalProfile(Context ctx){

@@ -318,7 +318,7 @@
     <string name="preference_ask_for_notification_description">Oyun/modpack fon yükləmələrinin düzgün işləməsi üçün tələb olunan bildiriş icazəsini yenidən tələb etmək üçün klikləyin.</string>
     <string name="preference_vsync_in_zink_title">Zink ilə V-Sync-ə icazə verin</string>
     <string name="preference_vsync_in_zink_description">Başladıcıya Zink üçün V-Sync-i aktivləşdirmək məqsədilə daxili sistem API-lərindən istifadə etməyə icazə verir. Başladıcınız sistem yeniləməsindən sonra qəfil Zink ilə çökərsə, bunu söndürün.</string>
-    <string name="exception_failed_to_unpack_jre17">JRE 17 quraşdırmaq alınmadı</string>
+    <string name="exception_failed_to_install_runtime">JRE quraşdırmaq alınmadı</string>
     <string name="newdl_starting">Oyun metadatası oxunur…</string>
     <string name="newdl_downloading_metadata">Oyun metadatası endirilir (%s)</string>
     <string name="controller_button_a">A</string>

@@ -17,6 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NewJREUtil {
+    /** Human readable reason for the most recent failed install, surfaced to the user. */
+    private static String sLastError;
+
+    /** @return why the last {@link #installNewJreIfNeeded} failed, or null if it did not fail. */
+    public static String getLastInstallError() {
+        return sLastError;
+    }
+
     private static boolean checkInternalRuntime(AssetManager assetManager, InternalRuntime internalRuntime) {
         String launcher_runtime_version;
         String installed_runtime_version = MultiRTUtils.readInternalRuntimeVersion(internalRuntime.name);
@@ -26,7 +34,11 @@ public class NewJREUtil {
             //we don't have a runtime included!
             //if we have one installed -> return true -> proceed (no updates but the current one should be functional)
             //if we don't -> return false -> Cannot find compatible Java runtime
-            return installed_runtime_version != null;
+            if (installed_runtime_version == null) {
+                sLastError = "the launcher carries no " + internalRuntime.path + " bundle for this install";
+                return false;
+            }
+            return true;
         }
         // this implicitly checks for null, so it will unpack the runtime even if we don't have one installed
         if(!launcher_runtime_version.equals(installed_runtime_version))
@@ -35,15 +47,21 @@ public class NewJREUtil {
     }
 
     private static boolean unpackInternalRuntime(AssetManager assetManager, InternalRuntime internalRuntime, String version) {
+        String abi = archAsString(Tools.DEVICE_ARCHITECTURE);
+        String archBinpack = internalRuntime.path + "/bin-" + abi + ".tar.xz";
         try {
             MultiRTUtils.installRuntimeNamedBinpack(
                     assetManager.open(internalRuntime.path+"/universal.tar.xz"),
-                    assetManager.open(internalRuntime.path+"/bin-" + archAsString(Tools.DEVICE_ARCHITECTURE) + ".tar.xz"),
+                    assetManager.open(archBinpack),
                     internalRuntime.name, version);
             MultiRTUtils.postPrepare(internalRuntime.name);
+            sLastError = null;
             return true;
         }catch (IOException e) {
+            // Not every runtime is published for every ABI - JRE 25 has no 32-bit x86 build.
             Log.e("NewJREAuto", "Internal JRE unpack failed", e);
+            sLastError = internalRuntime.name + " could not be unpacked from " + internalRuntime.path
+                    + " for ABI " + abi + " (" + e.getMessage() + ")";
             return false;
         }
     }
@@ -68,6 +86,7 @@ public class NewJREUtil {
 
     /** @return true if everything is good, false otherwise.  */
     public static boolean installNewJreIfNeeded(Activity activity, JMinecraftVersionList.Version versionInfo) {
+        sLastError = null;
         //Now we have the reliable information to check if our runtime settings are good enough
         if (versionInfo.javaVersion == null || versionInfo.javaVersion.component.equalsIgnoreCase("jre-legacy"))
             return true;
@@ -103,6 +122,7 @@ public class NewJREUtil {
         // No possible selections
         if(selectedRankedRuntime == null) {
             showRuntimeFail(activity, versionInfo);
+            sLastError = "no Java runtime is bundled or installed for Java " + gameRequiredVersion;
             return false;
         }
 
@@ -143,7 +163,11 @@ public class NewJREUtil {
 
     private enum InternalRuntime {
         JRE_17(17, "Internal-17", "components/jre-new"),
-        JRE_21(21, "Internal-21", "components/jre-21");
+        JRE_21(21, "Internal-21", "components/jre-21"),
+        // Minecraft releases from 2026 ask for Java 25. Without an entry here
+        // getNearestInternalRuntime() returns null for a Java 25 request and the
+        // whole download aborts with a "Failed to install JRE" error.
+        JRE_25(25, "Internal-25", "components/jre-25");
         public final int majorVersion;
         public final String name;
         public final String path;

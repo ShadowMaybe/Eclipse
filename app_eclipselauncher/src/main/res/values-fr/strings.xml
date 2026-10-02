@@ -325,7 +325,7 @@
     <string name="preference_ask_for_notification_description">Cliquez sur ce bouton pour redemander l\'autorisation de notification, nécessaire au bon fonctionnement des téléchargements en arrière-plan des jeux/modpacks.</string>
     <string name="preference_vsync_in_zink_title">Autoriser la V-Sync avec Zink</string>
     <string name="preference_vsync_in_zink_description">Permet au launcher d\'utiliser les API internes du système pour activer V-Sync pour Zink. Désactivez cette option si votre launcher se bloque soudainement avec Zink après une mise à jour du système.</string>
-    <string name="exception_failed_to_unpack_jre17">L\'installation de JRE 17 a échoué</string>
+    <string name="exception_failed_to_install_runtime">L\'installation de JRE a échoué</string>
     <string name="newdl_starting">Lecture des métadonnées du jeu …</string>
     <string name="newdl_downloading_metadata">Téléchargement des métadonnées du jeu (%s)</string>
     <string name="newdl_downloading_game_files">Téléchargement du jeu en cours… (%d/%d, %.2f MB/s)</string>

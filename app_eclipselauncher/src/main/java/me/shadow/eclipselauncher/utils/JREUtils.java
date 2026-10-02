@@ -141,11 +141,21 @@ public class JREUtils {
 
     public static void relocateLibPath(Runtime runtime, String jreHome) {
         String JRE_ARCHITECTURE = runtime.arch;
-        if (Architecture.archAsInt(JRE_ARCHITECTURE) == ARCH_X86){
+        if (JRE_ARCHITECTURE == null || JRE_ARCHITECTURE.isEmpty()) {
+            JRE_ARCHITECTURE = "";
+        } else if (Architecture.archAsInt(JRE_ARCHITECTURE) == ARCH_X86){
             JRE_ARCHITECTURE = "i386/i486/i586";
         }
 
+        // DIRNAME_HOME_JRE is shared, sticky state and the bundled runtimes are not laid out
+        // the same way: JRE 8 ships its binaries under lib/<abi>, while JRE 17/21/25 use a
+        // plain lib/. Reset before probing, otherwise switching away from an arch-suffixed
+        // runtime keeps a directory that no longer exists, and LD_LIBRARY_PATH, jvmLibraryPath
+        // and the locateLibs() preload below would all point at nothing.
+        Tools.DIRNAME_HOME_JRE = "lib";
+
         for (String arch : JRE_ARCHITECTURE.split("/")) {
+            if (arch.isEmpty()) continue;
             File f = new File(jreHome, "lib/" + arch);
             if (f.exists() && f.isDirectory()) {
                 Tools.DIRNAME_HOME_JRE = "lib/" + arch;

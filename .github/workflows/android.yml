@@ -46,17 +46,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          mkdir -p ${{ env.APP_MODULE }}/src/main/assets/components/{jre,jre-new,jre-21}
+          mkdir -p ${{ env.APP_MODULE }}/src/main/assets/components/{jre,jre-new,jre-21,jre-25}
           gh release download jres-v1.0.0 \
             --repo ShadowMaybe/JRE-Builds-Android \
             --pattern 'jre8-android-multiarch.zip' \
             --pattern 'jre17-android-multiarch.zip' \
-            --pattern 'jre21-android-multiarch.zip'
+            --pattern 'jre21-android-multiarch.zip' \
+            --pattern 'jre25-android-multiarch.zip'
           unzip -q jre8-android-multiarch.zip  -d ${{ env.APP_MODULE }}/src/main/assets/components/jre
           unzip -q jre17-android-multiarch.zip -d ${{ env.APP_MODULE }}/src/main/assets/components/jre-new
           unzip -q jre21-android-multiarch.zip -d ${{ env.APP_MODULE }}/src/main/assets/components/jre-21
+          unzip -q jre25-android-multiarch.zip -d ${{ env.APP_MODULE }}/src/main/assets/components/jre-25
           rm -f jre*-android-multiarch.zip
-          ls -la ${{ env.APP_MODULE }}/src/main/assets/components/jre-new
+          ls -la ${{ env.APP_MODULE }}/src/main/assets/components/jre-25
 
       - uses: gradle/actions/setup-gradle@v4
         with:

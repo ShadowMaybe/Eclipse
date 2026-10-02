@@ -68,10 +68,8 @@ public class MinecraftDownloader {
                       @NonNull AsyncMinecraftDownloader.DoneListener listener) {
         if(activity != null){
             isLocalProfile = Tools.isLocalProfile(activity);
-            Tools.switchDemo(Tools.isDemoProfile(activity));
         } else {
             isLocalProfile = true;
-            Tools.switchDemo(true);
         }
 
         sExecutorService.execute(() -> {
@@ -108,7 +106,9 @@ public class MinecraftDownloader {
         mUseFileCounter = false;
 
         if(!downloadAndProcessMetadata(activity, verInfo, versionName)) {
-            throw new RuntimeException(activity.getString(R.string.exception_failed_to_unpack_jre17));
+            String detail = NewJREUtil.getLastInstallError();
+            String message = activity.getString(R.string.exception_failed_to_install_runtime);
+            throw new RuntimeException(detail == null ? message : message + "\n" + detail);
         }
 
         ArrayBlockingQueue<Runnable> taskQueue =

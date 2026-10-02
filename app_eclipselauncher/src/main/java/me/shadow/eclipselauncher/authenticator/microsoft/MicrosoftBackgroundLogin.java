@@ -59,7 +59,6 @@ public class MicrosoftBackgroundLogin {
     public String mcName;
     public String mcToken;
     public String mcUuid;
-    public boolean doesOwnGame;
     public long expiresAt;
 
     public MicrosoftBackgroundLogin(boolean isRefresh, String authCode){
@@ -288,18 +287,16 @@ public class MicrosoftBackgroundLogin {
             String uuidDashes = uuid.replaceFirst(
                     "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
             );
-            doesOwnGame = true;
             Log.i("MicrosoftLogin","UserName = " + name);
             Log.i("MicrosoftLogin","Uuid Minecraft = " + uuidDashes);
             mcName=name;
             mcUuid=uuidDashes;
         }else{
-            Log.i("MicrosoftLogin","It seems that this Microsoft Account does not own the game.");
-            doesOwnGame = false;
-            mcName = "Demo.Player";
-            mcUuid = "00000000-0000-0000-0000-000000000000";
-            //throw new PresentedException(new RuntimeException(conn.getResponseMessage()), R.string.minecraft_not_owned);
-            //throwResponseError(conn);
+            // An account without a Minecraft profile cannot be added.
+            String responseMessage = conn.getResponseMessage();
+            conn.disconnect();
+            Log.i("MicrosoftLogin","This Microsoft account does not own Minecraft, refusing the login.");
+            throw new PresentedException(new RuntimeException(responseMessage), R.string.minecraft_not_owned);
         }
     }
 

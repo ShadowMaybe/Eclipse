@@ -266,7 +266,7 @@
     <string name="preference_ask_for_notification_description">Klik om de meldingsmachtiging opnieuw op te vragen, vereist voor game/modpack achtergrond downloads om correct te werken.</string>
     <string name="preference_vsync_in_zink_title">V-Sync met Zink toestaan</string>
     <string name="preference_vsync_in_zink_description">Hiermee kan de launcher interne systeem API\'s gebruiken om V-Sync voor Zink in te schakelen. Schakel dit uit als je launcher ineens crasht met Zink na een systeemupdate.</string>
-    <string name="exception_failed_to_unpack_jre17">Installatie van JRE 17 mislukt</string>
+    <string name="exception_failed_to_install_runtime">Installatie van JRE mislukt</string>
     <string name="newdl_starting">Metadata van het spel lezen…</string>
     <string name="newdl_downloading_metadata">Spelmetagegevens downloaden (%s)</string>
     <string name="controller_button_select">Selecteer</string>
