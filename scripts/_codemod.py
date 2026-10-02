@@ -12,7 +12,7 @@ import os
 import sys
 import shutil
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ---------------------------------------------------------------- protections
 # JitPack coordinates that MUST survive the sweep verbatim.

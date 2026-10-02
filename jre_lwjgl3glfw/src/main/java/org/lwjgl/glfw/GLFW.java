@@ -521,7 +521,7 @@ public class GLFW
 
     static {
         try {
-            System.loadLibrary("pojavexec");
+            System.loadLibrary("eclipsebridge");
         } catch (UnsatisfiedLinkError e) {
             e.printStackTrace();
         }
@@ -595,7 +595,7 @@ public class GLFW
         throw new UnsupportedOperationException();
     }
 
-    private static final SharedLibrary GLFW = Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libpojavexec.so", true);
+    private static final SharedLibrary GLFW = Library.loadNative(GLFW.class, "org.lwjgl.glfw", "libeclipsebridge.so", true);
 
     /** Contains the function pointers loaded from the glfw {@link SharedLibrary}. */
     public static final class Functions {
@@ -604,25 +604,25 @@ public class GLFW
 
         /** Function address. */
         public static final long
-        Init = apiGetFunctionAddress(GLFW, "pojavInit"),
-        CreateContext = apiGetFunctionAddress(GLFW, "pojavCreateContext"),
-        GetCurrentContext = apiGetFunctionAddress(GLFW, "pojavGetCurrentContext"),
-        //DetachOnCurrentThread = apiGetFunctionAddress(GLFW, "pojavDetachOnCurrentThread"),
-        MakeContextCurrent = apiGetFunctionAddress(GLFW, "pojavMakeCurrent"),
-        Terminate = apiGetFunctionAddress(GLFW, "pojavTerminate"),
-        SetWindowHint = apiGetFunctionAddress(GLFW, "pojavSetWindowHint"),
-        SwapBuffers = apiGetFunctionAddress(GLFW, "pojavSwapBuffers"),
-        SwapInterval = apiGetFunctionAddress(GLFW, "pojavSwapInterval"),
-        PumpEvents = apiGetFunctionAddress(GLFW, "pojavPumpEvents"),
-        StopPumping = apiGetFunctionAddress(GLFW, "pojavStopPumping"),
-        StartPumping = apiGetFunctionAddress(GLFW, "pojavStartPumping");
+        Init = apiGetFunctionAddress(GLFW, "eclipseInit"),
+        CreateContext = apiGetFunctionAddress(GLFW, "eclipseCreateContext"),
+        GetCurrentContext = apiGetFunctionAddress(GLFW, "eclipseGetCurrentContext"),
+        //DetachOnCurrentThread = apiGetFunctionAddress(GLFW, "eclipseDetachOnCurrentThread"),
+        MakeContextCurrent = apiGetFunctionAddress(GLFW, "eclipseMakeCurrent"),
+        Terminate = apiGetFunctionAddress(GLFW, "eclipseTerminate"),
+        SetWindowHint = apiGetFunctionAddress(GLFW, "eclipseSetWindowHint"),
+        SwapBuffers = apiGetFunctionAddress(GLFW, "eclipseSwapBuffers"),
+        SwapInterval = apiGetFunctionAddress(GLFW, "eclipseSwapInterval"),
+        PumpEvents = apiGetFunctionAddress(GLFW, "eclipsePumpEvents"),
+        StopPumping = apiGetFunctionAddress(GLFW, "eclipseStopPumping"),
+        StartPumping = apiGetFunctionAddress(GLFW, "eclipseStartPumping");
     }
 
     public static SharedLibrary getLibrary() {
         return GLFW;
     }
 
-    @SuppressWarnings("unused") // Used by pojavexec
+    @SuppressWarnings("unused") // Used by eclipsebridge
     public static void internalChangeMonitorSize(int width, int height) {
         mGLFWWindowWidth = width;
         mGLFWWindowHeight = height;
@@ -1105,7 +1105,7 @@ public class GLFW
         callV(Functions.StopPumping);
         mGLFWInputPumping = false;
     }
-    @SuppressWarnings("unused") // Used by pojavexec
+    @SuppressWarnings("unused") // Used by eclipsebridge
     public static void internalWindowSizeChanged(long window) {
         try {
             glfwSetWindowSize(window, mGLFWWindowWidth, mGLFWWindowHeight);
@@ -1223,7 +1223,7 @@ public class GLFW
     }
     public static String glfwGetJoystickName(int jid) {
         if(jid == GLFW_JOYSTICK_1) {
-            return "Pojav XBOX 360 compatible gamepad";
+            return "Eclipse XBOX 360 compatible gamepad";
         }else return null;
     }
     public static FloatBuffer glfwGetJoystickAxes(int jid) {
@@ -1263,7 +1263,7 @@ public class GLFW
         return false;
     }
     public static String glfwGetGamepadName(int jid) {
-        if(jid == GLFW_JOYSTICK_1) return "Pojav XBOX 360 compatible gamepad";
+        if(jid == GLFW_JOYSTICK_1) return "Eclipse XBOX 360 compatible gamepad";
         else return null;
     }
     public static boolean glfwGetGamepadState(int jid, GLFWGamepadState state) {

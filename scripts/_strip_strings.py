@@ -10,7 +10,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 RES = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',
-                   'app_pojavlauncher', 'src', 'main', 'res')
+                   'app_eclipselauncher', 'src', 'main', 'res')
 
 
 def string_files(root):
