@@ -1,4 +1,4 @@
-%s (Minecraft: Java Edition for Android), version %s by Shadow<br>
+%s, version %s by Shadow<br>
 
 * License:<br>
  • This application is licensed under <a href="https://github.com/ShadowMaybe/Eclipse/blob/main/LICENSE">GNU LGPLv3</a>. It is a derivative work of PojavLauncher (LGPLv3).<br>
