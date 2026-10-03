@@ -99,6 +99,68 @@ jobs:
           rm -f jre*-android-multiarch.zip
           ls -la ${{ env.APP_MODULE }}/src/main/assets/components/jre-25
 
+      # LWJGL's own natives are built by us from pristine upstream 3.4.3 for
+      # Android/bionic (ShadowMaybe/eclipselwjgl) rather than taken from
+      # another team's output. That repository compiles the untouched LWJGL
+      # tree with NDK clang via -Dgcc.prefix=ndk-, verifies every import
+      # against the NDK's API-21 stub libraries, and publishes the result to
+      # its lwjgl-nightly release - so a failure there fails this build instead
+      # of silently shipping a stale binary.
+      #
+      # The committed .so under jniLibs/ are overwritten below. They remain in
+      # the tree only as a fallback for a local build; CI never uses them, and
+      # the .comment check proves it did not.
+      - name: Fetch LWJGL natives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          stage="$(mktemp -d)"
+          gh release download lwjgl-nightly \
+            --repo ShadowMaybe/eclipselwjgl \
+            --pattern 'eclipselwjgl-natives.zip' \
+            --dir "$stage"
+          test -s "$stage/eclipselwjgl-natives.zip"
+          unzip -q "$stage/eclipselwjgl-natives.zip" -d "$stage/tree"
+
+          # Modules a supported version actually declares. nuklear and par are
+          # deliberately left out: no version JSON names them, and their build
+          # blocks in config/linux/build.xml are the only two of 43 with no
+          # if:true binding guard, so they are produced as a side effect
+          # rather than on request.
+          modules='liblwjgl liblwjgl_opengl liblwjgl_stb liblwjgl_tinyfd liblwjgl_vma'
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            src="$stage/tree/$abi"
+            dst="${{ env.APP_MODULE }}/src/main/jniLibs/$abi"
+            if [ ! -d "$src" ]; then
+              echo "::error::release has no $abi/ directory"
+              ls -la "$stage/tree"
+              exit 1
+            fi
+            for m in $modules; do
+              if [ ! -s "$src/$m.so" ]; then
+                echo "::error::release is missing $m.so for $abi"
+                ls -la "$src"
+                exit 1
+              fi
+              cp "$src/$m.so" "$dst/$m.so"
+            done
+          done
+
+          # Prove the swap happened. The committed binary is GCC 4.9; ours is
+          # NDK clang. Without this, a download that silently copied nothing
+          # would still yield a green build - with the foreign binary in it.
+          comment="$(readelf -p .comment \
+            "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/liblwjgl.so" 2>/dev/null \
+            | grep -c 'clang' || true)"
+          if [ "$comment" -eq 0 ]; then
+            echo "::error::arm64-v8a/liblwjgl.so was not replaced by our build"
+            readelf -p .comment "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/liblwjgl.so" || true
+            exit 1
+          fi
+          echo "LWJGL natives from ShadowMaybe/eclipselwjgl @ lwjgl-nightly:"
+          ls -la "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/"
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11'
