@@ -109,7 +109,7 @@ jobs:
       #
       # The committed .so under jniLibs/ are overwritten below. They remain in
       # the tree only as a fallback for a local build; CI never uses them, and
-      # the .comment check proves it did not.
+      # the per-file hash comparison proves it did not.
       - name: Fetch LWJGL natives
         env:
           GH_TOKEN: ${{ github.token }}
@@ -144,20 +144,30 @@ jobs:
                 exit 1
               fi
               cp "$src/$m.so" "$dst/$m.so"
+              # Identity, not merely presence. The file that reaches the APK
+              # must be byte-for-byte the one our release produced; a copy
+              # aimed at the wrong directory would otherwise leave the
+              # committed foreign binary in place and still go green.
+              #
+              # This deliberately does not use .comment as a compiler marker.
+              # An earlier version of this step asserted the replacement by
+              # grepping .comment for 'clang'. It failed with:
+              #
+              #   readelf: Warning: Section '.comment' was not dumped
+              #            because it does not exist
+              #
+              # because llvm-strip drops .comment while the committed GCC 4.9
+              # binaries kept it - so the marker was missing exactly from the
+              # files we build and present on the ones we were replacing.
+              if [ "$(sha256sum "$dst/$m.so" | awk '{print $1}')" != \
+                   "$(sha256sum "$src/$m.so" | awk '{print $1}')" ]; then
+                echo "::error::$abi/$m.so is not the file from our release"
+                sha256sum "$dst/$m.so" "$src/$m.so"
+                exit 1
+              fi
             done
           done
 
-          # Prove the swap happened. The committed binary is GCC 4.9; ours is
-          # NDK clang. Without this, a download that silently copied nothing
-          # would still yield a green build - with the foreign binary in it.
-          comment="$(readelf -p .comment \
-            "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/liblwjgl.so" 2>/dev/null \
-            | grep -c 'clang' || true)"
-          if [ "$comment" -eq 0 ]; then
-            echo "::error::arm64-v8a/liblwjgl.so was not replaced by our build"
-            readelf -p .comment "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/liblwjgl.so" || true
-            exit 1
-          fi
           echo "LWJGL natives from ShadowMaybe/eclipselwjgl @ lwjgl-nightly:"
           ls -la "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/"
 
