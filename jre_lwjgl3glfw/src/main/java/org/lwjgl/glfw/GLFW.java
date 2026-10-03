@@ -316,7 +316,40 @@ public class GLFW
     GLFW_STICKY_KEYS          = 0x33002,
     GLFW_STICKY_MOUSE_BUTTONS = 0x33003,
     GLFW_LOCK_KEY_MODS        = 0x33004,
-    GLFW_RAW_MOUSE_MOTION     = 0x33005;
+    GLFW_RAW_MOUSE_MOTION     = 0x33005,
+    GLFW_MANAGE_PREEDIT_CANDIDATE = 0x50004;
+
+    // Constants LWJGL 3.4.3 gained after this stub was written. Values are byte-for-byte LWJGL's. The
+    // stub accepts them wherever an input mode, window hint or platform hint is expected and then does
+    // nothing with them - the same treatment every other window-manager request gets here - but they
+    // have to exist or a caller referencing one dies with NoSuchFieldError.
+    public static final int
+    GLFW_IME                       = 0x33007,
+    GLFW_UNLIMITED_MOUSE_BUTTONS   = 0x33006,
+    GLFW_CURSOR_CAPTURED           = 0x34004,
+    GLFW_CONTEXT_DEBUG             = 0x22007,
+    GLFW_SCALE_FRAMEBUFFER         = 0x2200d,
+    GLFW_MOUSE_PASSTHROUGH         = 0x2000d,
+    GLFW_POSITION_X                = 0x2000e,
+    GLFW_POSITION_Y                = 0x2000f,
+    GLFW_SOFT_FULLSCREEN           = 0x20010,
+    GLFW_ANY_POSITION              = 0x80000000,
+    GLFW_PLATFORM_UNAVAILABLE      = 0x1000e,
+    GLFW_ANGLE_PLATFORM_TYPE       = 0x50002,
+    GLFW_ANGLE_PLATFORM_TYPE_NONE  = 0x37001,
+    GLFW_ANGLE_PLATFORM_TYPE_OPENGL    = 0x37002,
+    GLFW_ANGLE_PLATFORM_TYPE_OPENGLES  = 0x37003,
+    GLFW_ANGLE_PLATFORM_TYPE_D3D9      = 0x37004,
+    GLFW_ANGLE_PLATFORM_TYPE_D3D11     = 0x37005,
+    GLFW_ANGLE_PLATFORM_TYPE_VULKAN    = 0x37007,
+    GLFW_ANGLE_PLATFORM_TYPE_METAL     = 0x37008,
+    GLFW_WAYLAND_APP_ID             = 0x26001,
+    GLFW_WAYLAND_LIBDECOR           = 0x53001,
+    GLFW_WAYLAND_PREFER_LIBDECOR    = 0x38001,
+    GLFW_WAYLAND_DISABLE_LIBDECOR   = 0x38002,
+    GLFW_WIN32_SHOWDEFAULT          = 0x25002,
+    GLFW_X11_XCB_VULKAN_SURFACE     = 0x52001,
+    GLFW_X11_ONTHESPOT              = 0x52002;
 
     /** Cursor state. */
     public static final int
@@ -480,10 +513,13 @@ public class GLFW
     /* volatile */ public static GLFWCursorPosCallback mGLFWCursorPosCallback;
     /* volatile */ public static GLFWDropCallback mGLFWDropCallback;
     /* volatile */ public static GLFWErrorCallback mGLFWErrorCallback;
+    /* volatile */ public static GLFWIMEStatusCallbackI mGLFWIMEStatusCallbackI;
     /* volatile */ public static GLFWJoystickCallback mGLFWJoystickCallback;
     /* volatile */ public static GLFWKeyCallback mGLFWKeyCallback;
     /* volatile */ public static GLFWMonitorCallback mGLFWMonitorCallback;
     /* volatile */ public static GLFWMouseButtonCallback mGLFWMouseButtonCallback;
+    /* volatile */ public static GLFWPreeditCallbackI mGLFWPreeditCallbackI;
+    /* volatile */ public static GLFWPreeditCandidateCallbackI mGLFWPreeditCandidateCallbackI;
     /* volatile */ public static GLFWScrollCallback mGLFWScrollCallback;
     /* volatile */ public static GLFWWindowCloseCallback mGLFWWindowCloseCallback;
     /* volatile */ public static GLFWWindowContentScaleCallback mGLFWWindowContentScaleCallback;
@@ -497,6 +533,13 @@ public class GLFW
     // JNI when calling the default LWJGL callbacks.
     @Nullable public static GLFWFramebufferSizeCallbackI mGLFWFramebufferSizeCallbackI;
     @Nullable public static GLFWWindowSizeCallbackI mGLFWWindowSizeCallbackI;
+
+    // Cursor rectangle of the composition text, as reported by glfwGetPreeditCursorRectangle.
+    private static int mGLFWPreeditX, mGLFWPreeditY, mGLFWPreeditWidth, mGLFWPreeditHeight;
+
+    // Candidate list handed back by glfwGetPreeditCandidate. Nothing composes text on Android, so it is
+    // always empty; callers get a valid, zero-length view instead of a null they would dereference.
+    private static final IntBuffer mGLFWPreeditCandidates = ByteBuffer.allocateDirect(16).asIntBuffer();
 
     volatile public static int mGLFWWindowWidth, mGLFWWindowHeight;
 
@@ -697,6 +740,103 @@ public class GLFW
         }
         mGLFWFramebufferSizeCallbackI = cbfun;
         return previousCallback;
+    }
+
+    // IME preedit. Minecraft 26.1 and newer register these while assembling its keyboard callbacks, so
+    // they have to exist or the game throws NoSuchMethodError before it ever draws a frame. There is no
+    // input method editor behind the launcher: composed text arrives as ordinary char events, so - just
+    // like a desktop caller whose IME happens to be idle - the callbacks are stored and never fire. The
+    // cursor rectangle and candidate query are answered from Java state for the same reason: there is no
+    // IME to interrogate, and an empty, valid answer beats a null the caller dereferences.
+    public static GLFWIMEStatusCallback glfwSetIMEStatusCallback(@NativeType("GLFWwindow *") long window, @Nullable @NativeType("GLFWimestatusfun") GLFWIMEStatusCallbackI cbfun) {
+        GLFWIMEStatusCallback lastCallback = mGLFWIMEStatusCallbackI == null ? null : GLFWIMEStatusCallback.create(mGLFWIMEStatusCallbackI);
+        mGLFWIMEStatusCallbackI = cbfun;
+
+        return lastCallback;
+    }
+
+    public static GLFWPreeditCallback glfwSetPreeditCallback(@NativeType("GLFWwindow *") long window, @Nullable @NativeType("GLFWpreeditfun") GLFWPreeditCallbackI cbfun) {
+        GLFWPreeditCallback lastCallback = mGLFWPreeditCallbackI == null ? null : GLFWPreeditCallback.create(mGLFWPreeditCallbackI);
+        mGLFWPreeditCallbackI = cbfun;
+
+        return lastCallback;
+    }
+
+    public static GLFWPreeditCandidateCallback glfwSetPreeditCandidateCallback(@NativeType("GLFWwindow *") long window, @Nullable @NativeType("GLFWpreeditcandidatefun") GLFWPreeditCandidateCallbackI cbfun) {
+        GLFWPreeditCandidateCallback lastCallback = mGLFWPreeditCandidateCallbackI == null ? null : GLFWPreeditCandidateCallback.create(mGLFWPreeditCandidateCallbackI);
+        mGLFWPreeditCandidateCallbackI = cbfun;
+
+        return lastCallback;
+    }
+
+    public static long nglfwSetIMEStatusCallback(long window, long cbfun) {
+        return 0L;
+    }
+
+    public static long nglfwSetPreeditCallback(long window, long cbfun) {
+        return 0L;
+    }
+
+    public static long nglfwSetPreeditCandidateCallback(long window, long cbfun) {
+        return 0L;
+    }
+
+    public static void nglfwGetPreeditCursorRectangle(long window, long x, long y, long width, long height) {
+        memPutInt(x, mGLFWPreeditX);
+        memPutInt(y, mGLFWPreeditY);
+        memPutInt(width, mGLFWPreeditWidth);
+        memPutInt(height, mGLFWPreeditHeight);
+    }
+
+    public static long nglfwGetPreeditCandidate(long window, int index, long address) {
+        return 0L; // no candidate list is ever built without an IME
+    }
+
+    public static void glfwSetPreeditCursorRectangle(@NativeType("GLFWwindow *") long window, int x, int y, int width, int height) {
+        mGLFWPreeditX = x;
+        mGLFWPreeditY = y;
+        mGLFWPreeditWidth = width;
+        mGLFWPreeditHeight = height;
+    }
+
+    public static void glfwGetPreeditCursorRectangle(@NativeType("GLFWwindow *") long window, @NativeType("int *") IntBuffer x, @NativeType("int *") IntBuffer y, @NativeType("int *") IntBuffer width, @NativeType("int *") IntBuffer height) {
+        x.put(mGLFWPreeditX);
+        y.put(mGLFWPreeditY);
+        width.put(mGLFWPreeditWidth);
+        height.put(mGLFWPreeditHeight);
+    }
+
+    public static void glfwGetPreeditCursorRectangle(@NativeType("GLFWwindow *") long window, @NativeType("int *") int[] x, @NativeType("int *") int[] y, @NativeType("int *") int[] width, @NativeType("int *") int[] height) {
+        x[0] = mGLFWPreeditX;
+        y[0] = mGLFWPreeditY;
+        width[0] = mGLFWPreeditWidth;
+        height[0] = mGLFWPreeditHeight;
+    }
+
+    public static void glfwResetPreeditText(@NativeType("GLFWwindow *") long window) {
+        // Nothing to clear: no composition was ever started.
+    }
+
+    public static IntBuffer glfwGetPreeditCandidate(@NativeType("GLFWwindow *") long window, int index) {
+        mGLFWPreeditCandidates.clear();
+        return mGLFWPreeditCandidates;
+    }
+
+    public static void nglfwInitAllocator(@NativeType("GLFWallocator *") long allocator) {
+        // The launcher owns the process allocator; GLFW is not allowed to replace it.
+    }
+
+    public static void glfwInitAllocator(@Nullable @NativeType("GLFWallocator *") GLFWAllocator allocator) {
+        // Intentionally ignored, see nglfwInitAllocator.
+    }
+
+    public static long nglfwGetWindowTitle(@NativeType("GLFWwindow *") long window) {
+        return 0L;
+    }
+
+    public static String glfwGetWindowTitle(@NativeType("GLFWwindow *") long window) {
+        CharSequence title = internalGetWindow(window).title;
+        return title == null ? "" : title.toString();
     }
 
     public static GLFWJoystickCallback glfwSetJoystickCallback(/* @NativeType("GLFWwindow *") long window, */ @Nullable @NativeType("GLFWjoystickfun") GLFWJoystickCallbackI cbfun) {
