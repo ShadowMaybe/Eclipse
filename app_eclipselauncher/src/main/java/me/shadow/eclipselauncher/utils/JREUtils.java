@@ -367,6 +367,14 @@ public class JREUtils {
                 "-Declipse.path.private.account=" + Tools.DIR_ACCOUNT_NEW,
                 "-Duser.timezone=" + TimeZone.getDefault().getID(),
 
+                // LWJGL 3.4.x tries its bundled allocators in order mimalloc -> rpmalloc -> jemalloc. We ship none
+                // of the three as natives, and unlike 3.3.3 the 3.4.x JEmalloc$Allocator constructs without
+                // touching the native library, so UnsatisfiedLinkError surfaces on the first malloc() instead of
+                // inside MemoryManage's catch - killing GLFW.<clinit>. Pin the allocator to the system one.
+                "-Dorg.lwjgl.system.allocator=system",
+                // Our natives are self-built, so the upstream .sha1 baked into the LWJGL jars can never match.
+                // The check only prints an ERROR line that reads like a real failure.
+                "-Dorg.lwjgl.util.NoHashChecks=true",
                 "-Dorg.lwjgl.vulkan.libname=libvulkan.so",
                 //LWJGL 3 DEBUG FLAGS
                 //"-Dorg.lwjgl.util.Debug=true",
