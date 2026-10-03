@@ -12,6 +12,19 @@ jar {
     destinationDirectory.set(file("../app_eclipselauncher/src/main/assets/components/lwjgl3/"))
     if (gitUsed()){
       File versionFile = file("../app_eclipselauncher/src/main/assets/components/lwjgl3/version")
+      // The containing directory holds the jar this task generates and is
+      // gitignored, so on a fresh checkout it does not exist at all - git
+      // does not materialise empty directories. This block runs during
+      // configuration, before jar has created destinationDirectory, and
+      // File.write does not create parent directories, so the first gradle
+      // invocation of a clean clone dies with:
+      //
+      //   .../src/main/assets/components/lwjgl3/version
+      //   (No such file or directory)
+      //
+      // It only ever appeared to work while the generated files were still
+      // tracked in the repository.
+      versionFile.parentFile.mkdirs()
       versionFile.write(getGitHash(project.name))
     }
     from {
