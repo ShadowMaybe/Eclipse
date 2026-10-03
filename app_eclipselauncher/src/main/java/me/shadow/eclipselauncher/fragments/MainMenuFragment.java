@@ -54,16 +54,15 @@ public class MainMenuFragment extends Fragment {
             if (!requireAccount()) return;
             Tools.openURL(requireActivity(), Tools.URL_HOME);
         });
-        mCustomControlButton.setOnClickListener(v -> {
-            if (!requireAccount()) return;
-            startActivity(new Intent(requireContext(), CustomControlsActivity.class));
-        });
+        // Custom controls is exempt from the account gate. Settings > Control opens this
+        // very same CustomControlsActivity through an <intent> preference row, and that
+        // route never passes through Tools.swapFragment, so it was already free while
+        // this button demanded a login - one feature, two different answers depending on
+        // which door you came in by.
+        mCustomControlButton.setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
         // The .jar button gates itself inside runInstallerWithConfirmation.
-        mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
-        mInstallJarButton.setOnLongClickListener(v->{
-            runInstallerWithConfirmation(true);
-            return true;
-        });
+        mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation());
         mEditProfileButton.setOnClickListener(v -> {
             if (!requireAccount()) return;
             mVersionSpinner.openProfileEditor(requireActivity());
@@ -115,7 +114,7 @@ public class MainMenuFragment extends Fragment {
         mVersionSpinner.reloadProfiles();
     }
 
-    private void runInstallerWithConfirmation(boolean isCustomArgs) {
+    private void runInstallerWithConfirmation() {
         // Installing a mod loader writes into a game directory that belongs to a profile, so it is gated
         // exactly like launching: one account of any kind is enough, none is not.
         if (!MinecraftAccount.anyAccountExists()) {
@@ -124,7 +123,11 @@ public class MainMenuFragment extends Fragment {
             return;
         }
         if (ProgressKeeper.getTaskCount() == 0)
-            Tools.installMod(requireActivity(), isCustomArgs);
+            // false = run the installer with default Java arguments. The long-press that
+            // used to ask for custom arguments is gone with the Wiki one; the AWT
+            // installer gets its own pre-launch argument editor instead, which is why
+            // Tools.installMod keeps its boolean parameter.
+            Tools.installMod(requireActivity(), false);
         else
             Toast.makeText(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
     }
