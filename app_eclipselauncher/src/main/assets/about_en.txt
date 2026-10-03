@@ -17,6 +17,7 @@
  • <a href="https://github.com/bytedance/android-bytehook">bytehook</a>: Apache License 2.0.<br>
  • <a href="https://commons.apache.org/proper/commons-codec/">commons-codec</a>: Apache License 2.0.<br>
  • <a href="https://github.com/google/gson">Gson</a>: Apache License 2.0.<br>
+ • <a href="https://github.com/intuit/sdp">sdp</a> / <a href="https://github.com/intuit/ssp">ssp</a>: <a href="https://github.com/intuit/sdp/blob/master/LICENSE">MIT License</a>.<br>
  • <a href="https://github.com/ShadowMaybe/Eclipse#credits-and-third-party-components">Full list on GitHub</a>.<br>
 
 * Notes:<br>

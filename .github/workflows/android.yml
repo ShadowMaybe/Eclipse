@@ -53,8 +53,8 @@ jobs:
       # LTW has no releases, only 90-day Actions artifacts, so we build it from a pinned
       # source ref rather than depending on another team's artifacts.
       #
-      # MojoLauncher/LTW (LGPL-3.0) is required over the archived PojavLauncherTeam/LTW we
-      # used to curl: its translator kept uniform-block dedup in a process-global table of
+      # MojoLauncher/LTW (LGPL-3.0) is required over the previously used archived upstream
+      # revision: its translator kept uniform-block dedup in a process-global table of
       # pointers that were freed after every conversion, compared by address not by name.
       # Depending on allocation order a block was either dropped or emitted twice, which is
       # what produced the 1.21.6+ core-profile failures:

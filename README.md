@@ -130,6 +130,7 @@ Third-party components and their licenses:
 | [commons-codec](https://commons.apache.org/proper/commons-codec/) | Apache-2.0 |
 | [Gson](https://github.com/google/gson) | Apache-2.0 |
 | [Exagear Apache Commons](https://github.com/eknal/ExagearApacheCommons) | Apache-2.0 |
+| [sdp](https://github.com/intuit/sdp) / [ssp](https://github.com/intuit/ssp) | MIT |
 
 Thanks to [MCHeads](https://mc-heads.net) for Minecraft avatars.
 
