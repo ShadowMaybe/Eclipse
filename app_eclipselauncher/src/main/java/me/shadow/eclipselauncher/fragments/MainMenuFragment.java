@@ -50,28 +50,54 @@ public class MainMenuFragment extends Fragment {
         Button mPlayButton = view.findViewById(R.id.play_button);
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
 
-        mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
-        mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
+        mNewsButton.setOnClickListener(v -> {
+            if (!requireAccount()) return;
+            Tools.openURL(requireActivity(), Tools.URL_HOME);
+        });
+        mCustomControlButton.setOnClickListener(v -> {
+            if (!requireAccount()) return;
+            startActivity(new Intent(requireContext(), CustomControlsActivity.class));
+        });
+        // The .jar button gates itself inside runInstallerWithConfirmation.
         mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
         mInstallJarButton.setOnLongClickListener(v->{
             runInstallerWithConfirmation(true);
             return true;
         });
-        mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
+        mEditProfileButton.setOnClickListener(v -> {
+            if (!requireAccount()) return;
+            mVersionSpinner.openProfileEditor(requireActivity());
+        });
 
         mPlayButton.setOnClickListener(v -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true));
 
-        mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
+        mShareLogsButton.setOnClickListener((v) -> {
+            if (!requireAccount()) return;
+            shareLog(requireContext());
+        });
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
+            if (!requireAccount()) return;
             openPath(v.getContext(), getCurrentProfileDirectory(), false);
         });
 
+        // Long-press on the Wiki button used to jump straight to the controller mapper.
+        // Dropped as a hidden gesture: Settings > Control > "Remap controller" reaches the
+        // same GamepadMapperFragment, so the shortcut was redundant.
+    }
 
-        mNewsButton.setOnLongClickListener((v)->{
-            Tools.swapFragment(requireActivity(), GamepadMapperFragment.class, GamepadMapperFragment.TAG, null);
-            return true;
-        });
+    /**
+     * Everything on the main menu except settings needs an account. The settings gear is
+     * wired in the Activity and never comes through here, so there is nothing else to
+     * exempt - and Tools.swapFragment applies the same rule to every other screen.
+     *
+     * @return true when the caller may proceed, false when a login was requested instead.
+     */
+    private boolean requireAccount() {
+        if (MinecraftAccount.anyAccountExists()) return true;
+        Toast.makeText(requireContext(), R.string.not_available_without_account, Toast.LENGTH_LONG).show();
+        Tools.swapFragment(requireActivity(), SelectAuthFragment.class, SelectAuthFragment.TAG, null);
+        return false;
     }
 
     private File getCurrentProfileDirectory() {

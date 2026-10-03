@@ -48,6 +48,11 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import me.shadow.eclipselauncher.fragments.GamepadMapperFragment;
+import me.shadow.eclipselauncher.fragments.LocalLoginFragment;
+import me.shadow.eclipselauncher.fragments.MainMenuFragment;
+import me.shadow.eclipselauncher.fragments.MicrosoftLoginFragment;
+import me.shadow.eclipselauncher.fragments.SelectAuthFragment;
 import me.shadow.eclipselauncher.lifecycle.ContextExecutor;
 import me.shadow.eclipselauncher.lifecycle.ContextExecutorTask;
 import me.shadow.eclipselauncher.lifecycle.LifecycleAwareAlertDialog;
@@ -57,6 +62,7 @@ import me.shadow.eclipselauncher.multirt.MultiRTUtils;
 import me.shadow.eclipselauncher.multirt.Runtime;
 import me.shadow.eclipselauncher.plugins.FFmpegPlugin;
 import me.shadow.eclipselauncher.prefs.LauncherPreferences;
+import me.shadow.eclipselauncher.prefs.screens.LauncherPreferenceFragment;
 import me.shadow.eclipselauncher.utils.DateUtils;
 import me.shadow.eclipselauncher.utils.DownloadUtils;
 import me.shadow.eclipselauncher.utils.FileUtils;
@@ -1069,8 +1075,42 @@ public final class Tools {
     }
 
     /** Swap the main fragment with another */
+    /**
+     * The only screens reachable while logged out.
+     *
+     * Settings is the exemption the user asked for, together with the screens its own rows
+     * open - today that is only GamepadMapperFragment ("Remap controller"); directory
+     * pickers hang off the profile editor, so they stay gated. The main menu stays because
+     * it is the hub the settings button returns to (otherwise "home" would dead-end into
+     * the login screen), and the three auth screens are the login flow itself, which cannot
+     * be gated by the thing it is meant to satisfy.
+     */
+    private static boolean isReachableWithoutAccount(@NonNull Class<? extends Fragment> fragmentClass) {
+        return LauncherPreferenceFragment.class.isAssignableFrom(fragmentClass)
+                || fragmentClass == GamepadMapperFragment.class
+                || fragmentClass == MainMenuFragment.class
+                || fragmentClass == SelectAuthFragment.class
+                || fragmentClass == MicrosoftLoginFragment.class
+                || fragmentClass == LocalLoginFragment.class;
+    }
+
     public static void swapFragment(FragmentActivity fragmentActivity , Class<? extends Fragment> fragmentClass,
                                     @Nullable String fragmentTag, @Nullable Bundle bundle) {
+        // Every launcher screen except settings needs an account. Checking it here rather
+        // than in each caller keeps the rule in one place: all navigation funnels through
+        // this method.
+        if (!MinecraftAccount.anyAccountExists() && !isReachableWithoutAccount(fragmentClass)) {
+            Toast.makeText(fragmentActivity, R.string.not_available_without_account, Toast.LENGTH_LONG).show();
+            if (fragmentClass != SelectAuthFragment.class) {
+                doSwapFragment(fragmentActivity, SelectAuthFragment.class, SelectAuthFragment.TAG, null);
+            }
+            return;
+        }
+        doSwapFragment(fragmentActivity, fragmentClass, fragmentTag, bundle);
+    }
+
+    private static void doSwapFragment(FragmentActivity fragmentActivity , Class<? extends Fragment> fragmentClass,
+                                       @Nullable String fragmentTag, @Nullable Bundle bundle) {
         // When people tab out, it might happen
         //TODO handle custom animations
         fragmentActivity.getSupportFragmentManager().beginTransaction()
