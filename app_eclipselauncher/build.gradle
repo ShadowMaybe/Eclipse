@@ -203,6 +203,7 @@ android {
 afterEvaluate {
     // Explicit dependencies for which the apk relies on
     tasks.mergeDebugAssets.dependsOn(":jre_lwjgl3glfw:jar")
+    tasks.mergeReleaseAssets.dependsOn(":jre_lwjgl3glfw:jar")
 }
 
 dependencies {
