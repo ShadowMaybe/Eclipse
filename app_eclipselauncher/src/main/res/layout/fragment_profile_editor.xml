@@ -276,7 +276,7 @@
         android:paddingHorizontal="@dimen/fragment_padding_medium"
         android:layout_marginVertical="13dp"
         >
-        <com.kdt.mcgui.MineButton
+        <me.shadow.eclipselauncher.widget.mcgui.MineButton
             android:id="@+id/vprof_editor_save_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -284,7 +284,7 @@
             android:text="@string/global_save"
             android:layout_marginEnd="@dimen/padding_medium" />
 
-        <com.kdt.mcgui.MineButton
+        <me.shadow.eclipselauncher.widget.mcgui.MineButton
             android:id="@+id/vprof_editor_delete_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

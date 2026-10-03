@@ -1,4 +1,4 @@
-package com.kdt.mcgui;
+package me.shadow.eclipselauncher.widget.mcgui;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;

@@ -1,4 +1,4 @@
-package com.kdt;
+package me.shadow.eclipselauncher.widget;
 
 import static me.shadow.eclipselauncher.Tools.currentDisplayMetrics;
 

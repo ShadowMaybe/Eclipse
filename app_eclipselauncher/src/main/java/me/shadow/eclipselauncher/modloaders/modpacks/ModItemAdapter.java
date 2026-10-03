@@ -18,7 +18,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kdt.SimpleArrayAdapter;
+import me.shadow.eclipselauncher.widget.SimpleArrayAdapter;
 
 import me.shadow.eclipselauncher.EclipseApplication;
 import me.shadow.eclipselauncher.R;

@@ -993,7 +993,7 @@ public class GLFW
 
     // private static double mTime = 0d;
     public static double glfwGetTime() {
-        // Boardwalk: just use system timer
+        // use the system timer directly
         // System.out.println("glfwGetTime");
         return (System.nanoTime() - mGLFWInitialTime) / 1.e9;
     }
@@ -1175,7 +1175,7 @@ public class GLFW
     public static void glfwWaitEvents() {}
 
     public static void glfwWaitEventsTimeout(double timeout) {
-        // Boardwalk: this isn't how you do a frame limiter, but oh well
+        // not the textbook frame limiter, but it does the job
         // System.out.println("Frame limiter");
     /*
         try {

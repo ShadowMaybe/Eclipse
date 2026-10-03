@@ -112,11 +112,6 @@ repository secrets (or environment variables locally):
 
 ## Credits and third-party components
 
-Eclipse Launcher is a derivative work of
-[**PojavLauncher**](https://github.com/PojavLauncherTeam/PojavLauncher) (LGPLv3),
-which in turn derives from **Boardwalk**. Substantial parts of this codebase
-originate there; see [`LICENSE`](LICENSE).
-
 Third-party components and their licenses:
 
 | Component | License |

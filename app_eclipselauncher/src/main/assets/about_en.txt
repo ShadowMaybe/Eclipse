@@ -1,7 +1,7 @@
 %s, version %s by Shadow<br>
 
 * License:<br>
- • This application is licensed under <a href="https://github.com/ShadowMaybe/Eclipse/blob/main/LICENSE">GNU LGPLv3</a>. It is a derivative work of PojavLauncher (LGPLv3).<br>
+ • This application is licensed under <a href="https://github.com/ShadowMaybe/Eclipse/blob/main/LICENSE">GNU LGPLv3</a>.<br>
 
 * Credits / third party components and their licenses:<br>
  • <a href="https://github.com/ptitSeb/gl4es">GL4ES</a>: <a href="https://github.com/ptitSeb/gl4es/blob/master/LICENSE">MIT License</a>.<br>

@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import com.kdt.mcgui.ProgressLayout;
+import me.shadow.eclipselauncher.widget.mcgui.ProgressLayout;
 
 import me.shadow.eclipselauncher.Tools;
 import me.shadow.eclipselauncher.multirt.MultiRTUtils;

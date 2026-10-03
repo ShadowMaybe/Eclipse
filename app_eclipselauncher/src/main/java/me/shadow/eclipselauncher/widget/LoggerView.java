@@ -1,4 +1,4 @@
-package com.kdt;
+package me.shadow.eclipselauncher.widget;
 
 import android.content.Context;
 import android.graphics.Typeface;

@@ -43,7 +43,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.kdt.LoggerView;
+import me.shadow.eclipselauncher.widget.LoggerView;
 
 import me.shadow.eclipselauncher.customcontrols.ControlButtonMenuListener;
 import me.shadow.eclipselauncher.customcontrols.ControlData;

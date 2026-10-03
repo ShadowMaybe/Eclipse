@@ -4,7 +4,7 @@ import android.util.Base64;
 import android.util.Base64OutputStream;
 import android.util.Log;
 
-import com.kdt.mcgui.ProgressLayout;
+import me.shadow.eclipselauncher.widget.mcgui.ProgressLayout;
 
 import me.shadow.eclipselauncher.R;
 import me.shadow.eclipselauncher.Tools;

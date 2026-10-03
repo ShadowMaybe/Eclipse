@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.oracle.dalvik.*;
+import me.shadow.eclipselauncher.jvm.*;
 import java.io.*;
 import java.util.*;
 import me.shadow.eclipselauncher.*;

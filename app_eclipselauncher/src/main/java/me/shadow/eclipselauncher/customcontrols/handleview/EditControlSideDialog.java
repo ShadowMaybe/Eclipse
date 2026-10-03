@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.kdt.SideDialogView;
+import me.shadow.eclipselauncher.widget.SideDialogView;
 
 import me.shadow.eclipselauncher.EfficientAndroidLWJGLKeycode;
 import me.shadow.eclipselauncher.R;

@@ -1,11 +1,11 @@
-package com.kdt.pickafile;
+package me.shadow.eclipselauncher.widget.pickafile;
 
 import androidx.appcompat.app.*;
 import android.content.*;
 import android.util.*;
 import android.widget.*;
 
-import com.ipaulpro.afilechooser.*;
+import me.shadow.eclipselauncher.widget.afilechooser.*;
 import java.io.*;
 import java.util.*;
 import me.shadow.eclipselauncher.*;

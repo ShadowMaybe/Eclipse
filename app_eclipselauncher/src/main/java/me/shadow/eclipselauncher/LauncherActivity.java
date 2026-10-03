@@ -21,8 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 
-import com.kdt.mcgui.ProgressLayout;
-import com.kdt.mcgui.mcAccountSpinner;
+import me.shadow.eclipselauncher.widget.mcgui.ProgressLayout;
+import me.shadow.eclipselauncher.widget.mcgui.mcAccountSpinner;
 
 import me.shadow.eclipselauncher.contracts.OpenDocumentWithExtension;
 import me.shadow.eclipselauncher.extra.ExtraConstants;

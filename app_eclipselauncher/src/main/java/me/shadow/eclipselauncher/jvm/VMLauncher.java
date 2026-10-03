@@ -1,4 +1,4 @@
-package com.oracle.dalvik;
+package me.shadow.eclipselauncher.jvm;
 
 public final class VMLauncher {
 	private VMLauncher() {

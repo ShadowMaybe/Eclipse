@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.kdt.mcgui.ProgressLayout;
+import me.shadow.eclipselauncher.widget.mcgui.ProgressLayout;
 
 import me.shadow.eclipselauncher.R;
 import me.shadow.eclipselauncher.Tools;

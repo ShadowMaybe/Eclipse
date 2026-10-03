@@ -1,4 +1,4 @@
-package com.kdt.mcgui;
+package me.shadow.eclipselauncher.widget.mcgui;
 
 import android.content.Context;
 import android.content.res.Resources;

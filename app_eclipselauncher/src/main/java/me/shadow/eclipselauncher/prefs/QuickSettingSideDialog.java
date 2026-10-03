@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.kdt.CustomSeekbar;
+import me.shadow.eclipselauncher.widget.CustomSeekbar;
 
 import me.shadow.eclipselauncher.R;
 import me.shadow.eclipselauncher.Tools;
@@ -27,7 +27,7 @@ import me.shadow.eclipselauncher.utils.interfaces.SimpleSeekBarListener;
  * Side dialog for quick settings that you can change in game
  * The implementation has to take action on some preference changes
  */
-public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
+public abstract class QuickSettingSideDialog extends me.shadow.eclipselauncher.widget.SideDialogView {
 
     private SharedPreferences.Editor mEditor;
     @SuppressLint("UseSwitchCompatOrMaterialCode")

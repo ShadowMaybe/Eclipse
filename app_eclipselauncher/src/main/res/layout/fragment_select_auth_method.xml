@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.kdt.mcgui.MineButton
+    <me.shadow.eclipselauncher.widget.mcgui.MineButton
         android:id="@+id/button_microsoft_authentication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         />
 
-    <com.kdt.mcgui.MineButton
+    <me.shadow.eclipselauncher.widget.mcgui.MineButton
         android:id="@+id/button_local_authentication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

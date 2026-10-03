@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
-import com.kdt.SideDialogView;
+import me.shadow.eclipselauncher.widget.SideDialogView;
 
 import me.shadow.eclipselauncher.R;
 

@@ -1,4 +1,4 @@
-package com.kdt.pickafile;
+package me.shadow.eclipselauncher.widget.pickafile;
 
 import java.io.*;
 import java.util.*;

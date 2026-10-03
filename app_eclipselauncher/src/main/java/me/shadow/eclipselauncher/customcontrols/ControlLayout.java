@@ -20,8 +20,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.JsonSyntaxException;
-import com.kdt.pickafile.FileListView;
-import com.kdt.pickafile.FileSelectedListener;
+import me.shadow.eclipselauncher.widget.pickafile.FileListView;
+import me.shadow.eclipselauncher.widget.pickafile.FileSelectedListener;
 
 import me.shadow.eclipselauncher.MinecraftGLSurface;
 import me.shadow.eclipselauncher.R;

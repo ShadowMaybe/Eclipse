@@ -63,7 +63,7 @@
 
 		</me.shadow.eclipselauncher.customcontrols.ControlLayout>
 
-		<com.kdt.LoggerView
+		<me.shadow.eclipselauncher.widget.LoggerView
 			android:id="@+id/mainLoggerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

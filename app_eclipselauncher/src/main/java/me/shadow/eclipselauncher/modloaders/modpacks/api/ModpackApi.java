@@ -3,7 +3,7 @@ package me.shadow.eclipselauncher.modloaders.modpacks.api;
 
 import android.content.Context;
 
-import com.kdt.mcgui.ProgressLayout;
+import me.shadow.eclipselauncher.widget.mcgui.ProgressLayout;
 
 import me.shadow.eclipselauncher.EclipseApplication;
 import me.shadow.eclipselauncher.R;

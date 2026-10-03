@@ -2,7 +2,7 @@ package me.shadow.eclipselauncher.modloaders;
 
 import android.app.Activity;
 
-import com.kdt.mcgui.ProgressLayout;
+import me.shadow.eclipselauncher.widget.mcgui.ProgressLayout;
 
 import me.shadow.eclipselauncher.JMinecraftVersionList;
 import me.shadow.eclipselauncher.R;

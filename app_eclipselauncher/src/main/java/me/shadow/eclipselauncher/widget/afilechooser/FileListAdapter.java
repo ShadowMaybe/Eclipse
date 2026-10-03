@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.ipaulpro.afilechooser;
+package me.shadow.eclipselauncher.widget.afilechooser;
 
 import android.content.*;
 import android.view.*;

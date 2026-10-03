@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
-// Boardwalk: missing include
+// <string.h> was not pulled in transitively
 #include <string.h>
 
 #include "log.h"
@@ -139,7 +139,7 @@ static jint launchJVM(int margc, char** margv) {
    // Set up the thread that will abort the launcher with an user-facing dialog on a signal.
    abort_waiter_setup();
 
-   // Boardwalk: silence
+   // debug logging disabled
    // LOGD("JLI lib = %x", (int)libjli);
    if (NULL == libjli) {
        LOGE("JLI lib = NULL: %s", dlerror());
@@ -149,7 +149,7 @@ static jint launchJVM(int margc, char** margv) {
 
    JLI_Launch_func *pJLI_Launch =
           (JLI_Launch_func *)dlsym(libjli, "JLI_Launch");
-    // Boardwalk: silence
+    // debug logging disabled
     // LOGD("JLI_Launch = 0x%x", *(int*)&pJLI_Launch);
 
    if (NULL == pJLI_Launch) {
@@ -177,11 +177,11 @@ static jint launchJVM(int margc, char** margv) {
 }
 
 /*
- * Class:     com_oracle_dalvik_VMLauncher
+ * Class:     me_shadow_eclipselauncher_jvm_VMLauncher
  * Method:    launchJVM
  * Signature: ([Ljava/lang/String;)I
  */
-JNIEXPORT jint JNICALL Java_com_oracle_dalvik_VMLauncher_launchJVM(JNIEnv *env, jclass clazz, jobjectArray argsArray) {
+JNIEXPORT jint JNICALL Java_me_shadow_eclipselauncher_jvm_VMLauncher_launchJVM(JNIEnv *env, jclass clazz, jobjectArray argsArray) {
 
    jint res = 0;
 

@@ -1,4 +1,4 @@
-package com.kdt.mcgui;
+package me.shadow.eclipselauncher.widget.mcgui;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static me.shadow.eclipselauncher.fragments.ProfileEditorFragment.DELETED_PROFILE;

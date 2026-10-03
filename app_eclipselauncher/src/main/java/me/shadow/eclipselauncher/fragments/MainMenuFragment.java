@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.kdt.mcgui.mcVersionSpinner;
+import me.shadow.eclipselauncher.widget.mcgui.mcVersionSpinner;
 
 import me.shadow.eclipselauncher.CustomControlsActivity;
 import me.shadow.eclipselauncher.R;

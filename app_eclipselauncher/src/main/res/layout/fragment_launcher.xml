@@ -18,7 +18,7 @@
 		<androidx.constraintlayout.widget.ConstraintLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
-			<com.kdt.mcgui.LauncherMenuButton
+			<me.shadow.eclipselauncher.widget.mcgui.LauncherMenuButton
 				android:id="@+id/news_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -29,7 +29,7 @@
 				app:layout_constraintEnd_toEndOf="parent" />
 
 
-			<com.kdt.mcgui.LauncherMenuButton
+			<me.shadow.eclipselauncher.widget.mcgui.LauncherMenuButton
 				android:id="@+id/custom_control_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -37,7 +37,7 @@
 				android:text="@string/mcl_option_customcontrol"
 				app:layout_constraintTop_toBottomOf="@id/news_button" />
 
-			<com.kdt.mcgui.LauncherMenuButton
+			<me.shadow.eclipselauncher.widget.mcgui.LauncherMenuButton
 				android:id="@+id/install_jar_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -45,7 +45,7 @@
 				android:text="@string/main_install_jar_file"
 				app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
 
-			<com.kdt.mcgui.LauncherMenuButton
+			<me.shadow.eclipselauncher.widget.mcgui.LauncherMenuButton
 				android:id="@+id/share_logs_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -53,7 +53,7 @@
 				android:text="@string/main_share_logs"
 				app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
 
-			<com.kdt.mcgui.LauncherMenuButton
+			<me.shadow.eclipselauncher.widget.mcgui.LauncherMenuButton
 				android:id="@+id/open_files_button"
 				style="@style/LauncherMenuButton.Universal"
 				android:layout_width="match_parent"
@@ -63,7 +63,7 @@
 		</androidx.constraintlayout.widget.ConstraintLayout>
 	</ScrollView>
 
-	<com.kdt.mcgui.mcVersionSpinner
+	<me.shadow.eclipselauncher.widget.mcgui.mcVersionSpinner
 		android:id="@+id/mc_version_spinner"
 		android:layout_width="0dp"
 		android:layout_height="@dimen/_52sdp"
@@ -102,7 +102,7 @@
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
 
-	<com.kdt.mcgui.MineButton
+	<me.shadow.eclipselauncher.widget.mcgui.MineButton
 		android:id="@+id/play_button"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/_62sdp"

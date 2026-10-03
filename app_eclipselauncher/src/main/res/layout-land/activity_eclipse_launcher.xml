@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <com.kdt.mcgui.mcAccountSpinner
+    <me.shadow.eclipselauncher.widget.mcgui.mcAccountSpinner
         android:id="@+id/account_spinner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_42sdp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/account_spinner" />
 
 
-    <com.kdt.mcgui.ProgressLayout
+    <me.shadow.eclipselauncher.widget.mcgui.ProgressLayout
         android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
