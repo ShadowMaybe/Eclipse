@@ -369,6 +369,8 @@
     <string name="preference_ask_for_notification_description">Click to re-request the notification permission, required for game/modpack background downloads to work properly.</string>
     <string name="preference_vsync_in_zink_title">Allow V-Sync with Zink</string>
     <string name="preference_vsync_in_zink_description">Allows the launcher to use internal system APIs to enable V-Sync for Zink. Turn this off if your launcher suddenly crashes with Zink after a system update.</string>
+    <string name="preference_disable_menu_blur_title">Disable menu blur</string>
+    <string name="preference_disable_menu_blur_description">The blur behind the title and pause screens is drawn as six full-resolution passes every frame, with no downsample, which can stutter or stall the device. Turning it off skips the effect entirely. This is re-applied every launch; switch it off here to keep whatever you set in-game.</string>
     <string name="exception_failed_to_install_runtime">Failed to install the required Java runtime</string>
     <string name="newdl_starting">Reading game metadata…</string>
     <string name="newdl_downloading_metadata">Downloading game metadata (%s)</string>

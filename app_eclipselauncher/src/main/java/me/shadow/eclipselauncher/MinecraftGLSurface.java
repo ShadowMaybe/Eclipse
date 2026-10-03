@@ -383,6 +383,16 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         MCOptionUtils.set("fullscreen", "off");
         MCOptionUtils.set("overrideWidth", String.valueOf(windowWidth));
         MCOptionUtils.set("overrideHeight", String.valueOf(windowHeight));
+        // The menu blur is not a screen-space trick the GUI draws: assets/minecraft/post_effect/blur.json
+        // runs six full-resolution passes per frame - three horizontal, three vertical, ping-ponging on a
+        // "swap" target sized to the main target, with no downsample and no mip chain anywhere - every
+        // frame that a blurred screen is visible. box_blur.fsh takes MenuBlurRadius taps per pass, so the
+        // default radius is 36 texture fetches per pixel per frame on top of six render-target switches.
+        // On a bandwidth-limited mobile GPU that is what stalls the device, and Mojang closed the report
+        // for it (MC-302121) as invalid without shipping a fix. Writing 0 takes the chain out of the
+        // frame; the switch in Video settings is what decides whether we do this.
+        if (LauncherPreferences.PREF_DISABLE_MENU_BLUR)
+            MCOptionUtils.set("menuBackgroundBlurriness", "0");
         MCOptionUtils.save();
         getMcScale();
 
