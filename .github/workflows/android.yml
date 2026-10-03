@@ -175,6 +175,32 @@ jobs:
         with:
           gradle-version: '8.11'
 
+      # Minecraft 26.2 adds shaderc, spvc, vulkan and vma to its module list.
+      # MinecraftDownloader skips every org.lwjgl coordinate because the launcher
+      # supplies those classes itself, so a missing jar here does not surface as a
+      # download failure but as the game dying with
+      #   NoClassDefFoundError: org.lwjgl.vulkan.VkPhysicalDeviceProperties2 (#373)
+      #
+      # Fetched instead of committed: 8.85 MiB, almost all of it the Vulkan jar.
+      # A released Maven Central coordinate is immutable, so 3.4.3 always resolves
+      # to the same bytes our other libs/*.jar already are - and the -f plus a full
+      # zip integrity test rejects an HTML error page rather than packaging it.
+      - name: Fetch LWJGL 26.2 module jars
+        run: |
+          set -euo pipefail
+          libs="jre_lwjgl3glfw/libs"
+          test -d "$libs" || { echo "::error::no such module dir: $libs"; exit 1; }
+          base="https://repo1.maven.org/maven2/org/lwjgl"
+          for a in lwjgl-vulkan lwjgl-shaderc lwjgl-spvc lwjgl-vma; do
+            out="$libs/$a.jar"
+            curl -fsSL --retry 3 --max-time 240 "$base/$a/3.4.3/$a-3.4.3.jar" -o "$out"
+            if ! unzip -tq "$out" >/dev/null; then
+              echo "::error::$out is not a readable jar"
+              exit 1
+            fi
+            echo "  $(basename "$out") $(stat -c%s "$out") bytes"
+          done
+
       - name: Build LWJGL component jar
         run: gradle :jre_lwjgl3glfw:build --no-daemon
 
