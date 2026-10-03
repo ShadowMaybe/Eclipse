@@ -171,27 +171,83 @@ jobs:
           echo "LWJGL natives from ShadowMaybe/eclipselwjgl @ lwjgl-nightly:"
           ls -la "${{ env.APP_MODULE }}/src/main/jniLibs/arm64-v8a/"
 
+      # Minecraft 26.3 swaps glfw for sdl in its LWJGL module list. LWJGL's SDL
+      # binding is the one binding with no JNI glue of its own: the shipped
+      # lwjgl-sdl-3.4.3-natives-*.jar contains nothing but libSDL3.so, which
+      # SDL.<clinit> hands to Library.loadNative as the library to resolve every
+      # SDL symbol from. So the only native 26.3 owes us is SDL3 itself.
+      #
+      # Ours comes from ShadowMaybe/eclipsesdl rather than build.lwjgl.org: that
+      # host only has glibc builds, and a glibc libSDL3.so in an APK fails at
+      # dlopen on device, long after this build has gone green. The zip is
+      # checked against the release's own SHA256SUMS before anything is
+      # unpacked, so a re-tagged asset cannot reach the APK, and only libSDL3.so
+      # is lifted out - the zip also carries libeclipseexec.so and
+      # libeclipsehook.so, which arrive here through their own path.
+      - name: Fetch SDL3 natives
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          stage="$(mktemp -d)"
+          gh release download v0.1.0 \
+            --repo ShadowMaybe/eclipsesdl \
+            --pattern 'SHA256SUMS.txt' \
+            --dir "$stage" --clobber
+          test -s "$stage/SHA256SUMS.txt"
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            name="eclipsesdl-v0.1.0-$abi.zip"
+            gh release download v0.1.0 \
+              --repo ShadowMaybe/eclipsesdl \
+              --pattern "$name" \
+              --dir "$stage" --clobber
+            test -s "$stage/$name"
+            want="$(awk -v f="$name" '$2 == f { print $1 }' "$stage/SHA256SUMS.txt")"
+            if [ -z "$want" ]; then
+              echo "::error::SHA256SUMS.txt has no entry for $name"
+              exit 1
+            fi
+            if [ "$(sha256sum "$stage/$name" | awk '{print $1}')" != "$want" ]; then
+              echo "::error::$name does not match the release's SHA256SUMS.txt"
+              exit 1
+            fi
+            dst="${{ env.APP_MODULE }}/src/main/jniLibs/$abi"
+            unzip -o -j -q "$stage/$name" libSDL3.so -d "$dst"
+            if [ ! -s "$dst/libSDL3.so" ]; then
+              echo "::error::release delivered no libSDL3.so for $abi"
+              exit 1
+            fi
+            readelf -h "$dst/libSDL3.so" >/dev/null || {
+              echo "::error::$abi/libSDL3.so is not an ELF"
+              exit 1
+            }
+          done
+          echo "SDL3 from ShadowMaybe/eclipsesdl @ v0.1.0:"
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            echo "  $abi $(stat -c%s "${{ env.APP_MODULE }}/src/main/jniLibs/$abi/libSDL3.so") bytes"
+          done
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11'
 
-      # Minecraft 26.2 adds shaderc, spvc, vulkan and vma to its module list.
-      # MinecraftDownloader skips every org.lwjgl coordinate because the launcher
-      # supplies those classes itself, so a missing jar here does not surface as a
-      # download failure but as the game dying with
+      # Minecraft 26.2 adds shaderc, spvc, vulkan and vma to its module list, and
+      # 26.3 adds sdl. MinecraftDownloader skips every org.lwjgl coordinate because
+      # the launcher supplies those classes itself, so a missing jar here does not
+      # surface as a download failure but as the game dying with
       #   NoClassDefFoundError: org.lwjgl.vulkan.VkPhysicalDeviceProperties2 (#373)
       #
       # Fetched instead of committed: 8.85 MiB, almost all of it the Vulkan jar.
       # A released Maven Central coordinate is immutable, so 3.4.3 always resolves
       # to the same bytes our other libs/*.jar already are - and the -f plus a full
       # zip integrity test rejects an HTML error page rather than packaging it.
-      - name: Fetch LWJGL 26.2 module jars
+      - name: Fetch LWJGL module jars
         run: |
           set -euo pipefail
           libs="jre_lwjgl3glfw/libs"
           test -d "$libs" || { echo "::error::no such module dir: $libs"; exit 1; }
           base="https://repo1.maven.org/maven2/org/lwjgl"
-          for a in lwjgl-vulkan lwjgl-shaderc lwjgl-spvc lwjgl-vma; do
+          for a in lwjgl-vulkan lwjgl-shaderc lwjgl-spvc lwjgl-vma lwjgl-sdl; do
             out="$libs/$a.jar"
             curl -fsSL --retry 3 --max-time 240 "$base/$a/3.4.3/$a-3.4.3.jar" -o "$out"
             if ! unzip -tq "$out" >/dev/null; then
@@ -200,6 +256,15 @@ jobs:
             fi
             echo "  $(basename "$out") $(stat -c%s "$out") bytes"
           done
+
+          # Presence of the jar is not the same as presence of the classes: a jar
+          # that unpacked is still a jar that could be missing the binding the game
+          # is about to load. 26.3 reaches SDL through org.lwjgl.sdl.SDL, and no
+          # amount of natives on disk hides its absence from the class loader.
+          if ! unzip -l "$libs/lwjgl-sdl.jar" | grep -q 'org/lwjgl/sdl/SDL.class'; then
+            echo "::error::lwjgl-sdl.jar does not contain org/lwjgl/sdl/SDL.class"
+            exit 1
+          fi
 
       - name: Build LWJGL component jar
         run: gradle :jre_lwjgl3glfw:build --no-daemon

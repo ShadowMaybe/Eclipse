@@ -307,6 +307,9 @@ public class JREUtils {
         purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
         // Don't let the user specify a custom Freetype library (as the user is unlikely to specify a version compiled for Android)
         purgeArg(userArgs, "-Dorg.lwjgl.freetype.libname");
+        // Same for SDL3: it is ours (ShadowMaybe/eclipsesdl), built against bionic, and the path below
+        // is the only one where that build is guaranteed to be unpacked.
+        purgeArg(userArgs, "-Dorg.lwjgl.sdl.libname");
         // Overridden by us to specify the exact number of cores that the android system has
         purgeArg(userArgs, "-XX:ActiveProcessorCount");
 
@@ -318,6 +321,14 @@ public class JREUtils {
         // Force LWJGL to use the Freetype library intended for it, instead of using the one
         // that we ship with Java (since it may be older than what's needed)
         userArgs.add("-Dorg.lwjgl.freetype.libname="+ NATIVE_LIB_DIR+"/libfreetype.so");
+
+        // Minecraft 26.3 declares org.lwjgl:lwjgl-sdl, and LWJGL's SDL binding ships no JNI glue of its
+        // own - its natives artifact contains nothing but libSDL3.so, which SDL.<clinit> hands straight to
+        // Library.loadNative as the shared library to resolve symbols from. Ours is built for bionic by
+        // ShadowMaybe/eclipsesdl and unpacks into the APK's lib directory, which LWJGL only reaches
+        // through java.library.path; on Android that is not where it looks first, so give it the path.
+        // Purged above so a user-supplied value cannot point at a desktop build.
+        userArgs.add("-Dorg.lwjgl.sdl.libname=" + NATIVE_LIB_DIR + "/libSDL3.so");
 
         // Some phones are not using the right number of cores, fix that
         userArgs.add("-XX:ActiveProcessorCount=" + java.lang.Runtime.getRuntime().availableProcessors());
