@@ -61,8 +61,14 @@ public class MainMenuFragment extends Fragment {
         // which door you came in by.
         mCustomControlButton.setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
-        // The .jar button gates itself inside runInstallerWithConfirmation.
-        mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation());
+        // The .jar button gates itself inside runInstallerWithConfirmation. Its
+        // long-press runs the installer with custom Java arguments instead of the
+        // defaults a plain tap uses.
+        mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
+        mInstallJarButton.setOnLongClickListener(v -> {
+            runInstallerWithConfirmation(true);
+            return true;
+        });
         mEditProfileButton.setOnClickListener(v -> {
             if (!requireAccount()) return;
             mVersionSpinner.openProfileEditor(requireActivity());
@@ -114,7 +120,7 @@ public class MainMenuFragment extends Fragment {
         mVersionSpinner.reloadProfiles();
     }
 
-    private void runInstallerWithConfirmation() {
+    private void runInstallerWithConfirmation(boolean isCustomArgs) {
         // Installing a mod loader writes into a game directory that belongs to a profile, so it is gated
         // exactly like launching: one account of any kind is enough, none is not.
         if (!MinecraftAccount.anyAccountExists()) {
@@ -123,11 +129,7 @@ public class MainMenuFragment extends Fragment {
             return;
         }
         if (ProgressKeeper.getTaskCount() == 0)
-            // false = run the installer with default Java arguments. The long-press that
-            // used to ask for custom arguments is gone with the Wiki one; the AWT
-            // installer gets its own pre-launch argument editor instead, which is why
-            // Tools.installMod keeps its boolean parameter.
-            Tools.installMod(requireActivity(), false);
+            Tools.installMod(requireActivity(), isCustomArgs);
         else
             Toast.makeText(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
     }
