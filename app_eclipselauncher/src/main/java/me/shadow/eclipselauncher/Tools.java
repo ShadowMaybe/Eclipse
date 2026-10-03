@@ -1339,13 +1339,19 @@ public final class Tools {
     /**
      * The account the game is launched with.
      *
-     * Launching never depends on having signed in: when no profile has been saved yet a throwaway local account is
-     * returned, so a first run reaches the game without anyone having to authenticate. Signing in only buys what
-     * Minecraft itself gates behind a token - online servers, skins, Realms - and never a launcher feature.
+     * The launcher only reaches this once at least one account exists, so the current profile normally resolves.
+     * When that pointer is unset or stale while accounts are on disk, the first saved account is used rather than
+     * a throwaway, so the game always runs as somebody the launcher knows. Signing in only buys what Minecraft
+     * itself gates behind a token - online servers, skins, Realms - and never a launcher feature.
      */
     public static MinecraftAccount getLaunchAccount(Context ctx){
         MinecraftAccount currentProfile = EclipseProfile.getCurrentProfileContent(ctx, null);
         if(currentProfile != null) return currentProfile;
+        for (String name : MinecraftAccount.listAccounts()) {
+            MinecraftAccount account = MinecraftAccount.load(name);
+            if (account != null) return account;
+        }
+        // Unreachable while the launcher requires an account; kept so callers never see null.
         // The field defaults of MinecraftAccount are already a local profile: accessToken "0" makes isLocal() true.
         return new MinecraftAccount();
     }

@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -45,6 +44,7 @@ import me.shadow.eclipselauncher.tasks.AsyncMinecraftDownloader;
 import me.shadow.eclipselauncher.tasks.AsyncVersionList;
 import me.shadow.eclipselauncher.tasks.MinecraftDownloader;
 import me.shadow.eclipselauncher.utils.NotificationUtils;
+import me.shadow.eclipselauncher.value.MinecraftAccount;
 import me.shadow.eclipselauncher.value.launcherprofiles.LauncherProfiles;
 import me.shadow.eclipselauncher.value.launcherprofiles.MinecraftProfile;
 
@@ -108,6 +108,14 @@ public class LauncherActivity extends BaseActivity {
             return false;
         }
 
+        // At least one account is required before the launcher will do anything at all. Which kind is a choice -
+        // a local (offline) account satisfies this exactly like a Microsoft one - but having none is not.
+        if(!MinecraftAccount.anyAccountExists()){
+            Toast.makeText(this, R.string.not_available_without_account, Toast.LENGTH_LONG).show();
+            Tools.swapFragment(this, SelectAuthFragment.class, SelectAuthFragment.TAG, null);
+            return false;
+        }
+
         String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
         if (LauncherProfiles.mainProfileJson == null || !LauncherProfiles.mainProfileJson.profiles.containsKey(selectedProfile)){
             Toast.makeText(this, R.string.error_no_version, Toast.LENGTH_LONG).show();
@@ -119,12 +127,6 @@ public class LauncherActivity extends BaseActivity {
             return false;
         }
 
-        if(mAccountSpinner.getSelectedAccount() == null){
-            // Nothing is saved yet, which is not a reason to refuse a launch: the game runs on the local account
-            // that Tools.getLaunchAccount() falls back to. Signing in stays something you choose to do, not a gate.
-            // Logcat rather than Logger: the log file only exists once MainActivity has started the game.
-            Log.i("LauncherActivity", "No account saved, launching with the default local profile");
-        }
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
 

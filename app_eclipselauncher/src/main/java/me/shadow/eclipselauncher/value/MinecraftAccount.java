@@ -8,6 +8,7 @@ import me.shadow.eclipselauncher.*;
 import me.shadow.eclipselauncher.utils.FileUtils;
 
 import java.io.*;
+import java.util.Arrays;
 import com.google.gson.*;
 import android.graphics.Bitmap;
 import android.util.Base64;
@@ -122,5 +123,26 @@ public class MinecraftAccount {
 
     private static boolean accountExists(String username){
         return new File(Tools.DIR_ACCOUNT_NEW + "/" + username + ".json").exists();
+    }
+
+    /**
+     * Every account saved on this device, without the .json suffix, in no particular order.
+     * A local (offline) account is listed exactly like a Microsoft one: which kind of account
+     * is a choice, having one at all is not.
+     */
+    public static String[] listAccounts() {
+        String[] files = new File(Tools.DIR_ACCOUNT_NEW).list();
+        if (files == null || files.length == 0) return new String[0];
+        String[] names = new String[files.length];
+        int count = 0;
+        for (String file : files) {
+            if (file.endsWith(".json")) names[count++] = file.substring(0, file.length() - 5);
+        }
+        return count == names.length ? names : Arrays.copyOf(names, count);
+    }
+
+    /** The launcher requires at least one account before it does anything. */
+    public static boolean anyAccountExists() {
+        return listAccounts().length > 0;
     }
 }

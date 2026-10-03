@@ -23,6 +23,7 @@ import me.shadow.eclipselauncher.extra.ExtraConstants;
 import me.shadow.eclipselauncher.extra.ExtraCore;
 import me.shadow.eclipselauncher.prefs.LauncherPreferences;
 import me.shadow.eclipselauncher.progresskeeper.ProgressKeeper;
+import me.shadow.eclipselauncher.value.MinecraftAccount;
 import me.shadow.eclipselauncher.value.launcherprofiles.LauncherProfiles;
 import me.shadow.eclipselauncher.value.launcherprofiles.MinecraftProfile;
 
@@ -89,6 +90,13 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void runInstallerWithConfirmation(boolean isCustomArgs) {
+        // Installing a mod loader writes into a game directory that belongs to a profile, so it is gated
+        // exactly like launching: one account of any kind is enough, none is not.
+        if (!MinecraftAccount.anyAccountExists()) {
+            Toast.makeText(requireContext(), R.string.not_available_without_account, Toast.LENGTH_LONG).show();
+            Tools.swapFragment(requireActivity(), SelectAuthFragment.class, SelectAuthFragment.TAG, null);
+            return;
+        }
         if (ProgressKeeper.getTaskCount() == 0)
             Tools.installMod(requireActivity(), isCustomArgs);
         else
